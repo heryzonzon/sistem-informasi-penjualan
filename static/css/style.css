@@ -22,3 +22,8 @@ table {
 h2.title {
     color: #1f6377;
 }
+
+.red-alert {
+    margin-top: 5px;
+    color: #b94a48;
+}

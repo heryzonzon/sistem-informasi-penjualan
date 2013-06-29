@@ -1,5 +1,6 @@
 from flask.ext.login import current_user, login_user, logout_user
 from flask.ext.peewee.utils import check_password
+
 from router import *
 
 @lm.user_loader
@@ -50,6 +51,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.before_request
 def before_request():

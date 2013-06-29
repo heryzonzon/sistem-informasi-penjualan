@@ -62,8 +62,6 @@ def edit_item(id):
             data.save()
             flash('Data barang telah tersimpan')
             return redirect(url_for('items'))
-        else:
-            abort(403)
 
     elif request.method == 'GET':
         form = ItemForm(obj=data)
