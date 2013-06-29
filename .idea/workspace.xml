@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fae47e3-cda4-4341-91bd-5612427eec14" name="Default" comment="" />
+    <list default="true" id="9fae47e3-cda4-4341-91bd-5612427eec14" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="job_scraping.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="D:/SEMINAR/LAB/event_organizer/config.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371460579015" ignored="false" />
@@ -10,7 +14,7 @@
     <file path="/Python Console" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371463207362" ignored="false" />
     <file path="/routes.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372082236330" ignored="false" />
     <file path="/models.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372415460550" ignored="false" />
-    <file path="/base.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372417773200" ignored="false" />
+    <file path="/base.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372469089909" ignored="false" />
     <file path="/admin.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371948806184" ignored="false" />
     <file path="/run.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371465806842" ignored="false" />
     <file path="/api.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371932176924" ignored="false" />
@@ -44,6 +48,7 @@
     <file path="/login.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372412153238" ignored="false" />
     <file path="/user.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372468000467" ignored="false" />
     <file path="/requirements.txt" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372465515636" ignored="false" />
+    <file path="/Dummy.txt" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372468501139" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,10 +88,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="user.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partial/user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="0" selection-start="836" selection-end="836" vertical-scroll-proportion="0.8370884">
+            <state line="24" column="0" selection-start="735" selection-end="735" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="91" column="61" selection-start="3937" selection-end="3937" vertical-scroll-proportion="0.82894737">
               <folding />
             </state>
           </provider>
@@ -148,10 +162,17 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/forms.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/app/partial/__init__.py" />
@@ -167,6 +188,7 @@
         <option value="$PROJECT_DIR$/partial/router.py" />
         <option value="$PROJECT_DIR$/templates/user/list.html" />
         <option value="$PROJECT_DIR$/partial/user.py" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
       </list>
     </option>
   </component>
@@ -176,7 +198,7 @@
     <option name="width" value="1368" />
     <option name="height" value="746" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -275,7 +297,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="FullScreen" value="false" />
@@ -626,7 +648,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/partial/user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="836" selection-end="836" vertical-scroll-proportion="0.8370884">
+        <state line="24" column="0" selection-start="735" selection-end="735" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="61" selection-start="3937" selection-end="3937" vertical-scroll-proportion="0.82894737">
           <folding />
         </state>
       </provider>
