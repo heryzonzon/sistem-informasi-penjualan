@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="form-head">
+        <h2 class="pull-left title">{{ title.title() }}</h2>
+        <a class="btn btn-info btn-preposition-header" href="{{ url_for('add_' + attr) }}">
+            <i class="icon-plus icon-white"></i>
+        </a>
+
+        <form class="navbar-form pull-right" action="{{ url_for('search_items') }}">
+            <input type="text" name="query" class="search-query" placeholder="Cari barang" />
+        </form>
+        <br class="clearfix"/>
+    </div>
+
+    <!-- message box -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-info">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+
+    <!-- content -->
+    <table class="table table-striped">
+        <tr>
+            <th>Barcode</th>
+            <th>Nama</th>
+            <th>Stok</th>
+            <th>Harga Beli</th>
+            <th>Harga Jual</th>
+            <th>Action</th>
+        </tr>
+
+        {% for d in data %}
+            <tr>
+                <td>{{ d.barcode }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.stock }}</td>
+                <td>Rp{{ d.price_buy }}</td>
+                <td>Rp{{ d.price_sell }}</td>
+                <td>
+                    <a href="{{ url_for('edit_' + attr, id=d.id) }}">Edit</a>
+                    |
+                    <a href="{{ url_for('delete_' + attr, id=d.id) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}

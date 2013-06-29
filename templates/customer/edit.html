@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body %}
+    {% if data.name %}
+        <h2>Edit {{ data.name }}</h2>
+    {% else %}
+        <h2>Tambah data</h2>
+    {% endif %}
+    <br/>
+
+    <form class="form-horizontal" action="" method="post">
+        {% for field in form %}
+            <div class="control-group">
+                {{ field.label(class="control-label") }}
+                <div class="controls">
+                    {{ field }}
+                </div>
+            </div>
+
+            {% for message in field.errors %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" type="submit">Submit</button> or
+                <a href="{{ url_for(prev_link) }}">Back</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

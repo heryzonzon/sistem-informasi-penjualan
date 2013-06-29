@@ -1,0 +1,24 @@
+body { background-color: #f6f6f6 }
+#content {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 22px 32px;
+    margin-top: 40px
+}
+
+.form-head {
+    margin-bottom: 20px;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.btn-preposition-header {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+h2.title {
+    color: #1f6377;
+}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <!-- message box -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-info">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+
+    <form class="form-horizontal" action="{{ url_for('login') }}" method="post">
+        {% for field in form %}
+            <div class="control-group">
+                {{ field.label(class="control-label") }}
+                <div class="controls">
+                    {{ field }}
+                </div>
+            </div>
+
+            {% for message in field.errors %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

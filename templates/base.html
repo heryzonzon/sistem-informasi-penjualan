@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistem Informasi Penjualan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='select2/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-responsive.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+    <div class="row">
+        <nav class="span3">
+            <ul class="nav nav-list">
+                <li><a href="{{ url_for('index') }}">PD Teman Ban</a></li>
+
+                <li class="nav-header">BASIC</li>
+                <li class="item"><a href="{{ url_for('items') }}">Barang</a></li>
+                <li class="supplier"><a href="{{ url_for('suppliers') }}">Pemasok</a></li>
+                <li class="customer"><a href="{{ url_for('customers') }}">Pelanggan</a></li>
+
+                <li class="divider"></li>
+
+                <li class="nav-header">FAKTUR</li>
+                <li class="invoice_purchase"><a href="{{ url_for('invoices_purchase') }}">Faktur Pembelian</a></li>
+                <li class="invoice_sales"><a href="{{ url_for('invoices_sales') }}">Faktur Penjualan</a></li>
+
+                <li class="divider"></li>
+
+                <li class="nav-header">TRANSAKSI</li>
+                <li class="transaction_purchase"><a href="{{ url_for('transactions_purchase') }}">Transaksi Pembelian</a></li>
+                <li class="transaction_sales"><a href="{{ url_for('transactions_sales') }}">Transaksi Penjualan</a></li>
+
+                <li class="divider"></li>
+
+                <li class="nav-header">ACCOUNT</li>
+                {% if is_login %}
+                    {% if is_admin %}
+                        <li class="users"><a href="{{ url_for('users') }}">Edit user</a></li>
+                    {% endif %}
+
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="login"><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div id="content" class="span9">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='select2/select2.min.js') }}"></script>
+    <script type="text/javascript">
+        var url = window.location.href;
+        var addHighlightClass = [
+            { 'url': '/items', 'class': 'item' },
+            { 'url': '/suppliers', 'class': 'supplier' },
+            { 'url': '/customers', 'class': 'customer' },
+            { 'url': '/invoices/purchase', 'class': 'invoice_purchase' },
+            { 'url': '/invoices/sales/', 'class': 'invoice_sales' },
+            { 'url': '/transactions/purchase', 'class': 'transaction_purchase' },
+            { 'url': '/transactions/sales/', 'class': 'transaction_sales' },
+            { 'url': '/users', 'class': 'users' },
+            { 'url': '/login', 'class': 'login' }
+        ];
+
+        for ( var i = 0; i < addHighlightClass.length; i++ ) {
+            var obj = addHighlightClass[i];
+
+            if ( url.match( obj.url ) ) {
+                var menu = document.getElementsByClassName(obj.class)[0];
+                window.tes = menu;
+
+                if ( menu ) {
+                    menu.className += ' active';
+                    break;
+                }
+            }
+        }
+
+        // select2
+        $('form input, form select').addClass('span3');
+        $('form select').select2();
+        $('.select2-container').css({
+            marginLeft: 0,
+            paddingLeft: 0
+        });
+    </script>
+</body>
+</html>
