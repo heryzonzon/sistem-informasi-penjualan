@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fae47e3-cda4-4341-91bd-5612427eec14" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/customer.py" afterPath="$PROJECT_DIR$/partial/customer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/customer/edit.html" afterPath="$PROJECT_DIR$/templates/customer/edit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/item/edit.html" afterPath="$PROJECT_DIR$/templates/item/edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/user/edit.html" afterPath="$PROJECT_DIR$/templates/user/edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/supplier/edit.html" afterPath="$PROJECT_DIR$/templates/supplier/edit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/item.py" afterPath="$PROJECT_DIR$/partial/item.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/login.py" afterPath="$PROJECT_DIR$/partial/login.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/style.css" afterPath="$PROJECT_DIR$/static/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/customer/list.html" afterPath="$PROJECT_DIR$/templates/customer/list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/item/list.html" afterPath="$PROJECT_DIR$/templates/item/list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/supplier/list.html" afterPath="$PROJECT_DIR$/templates/supplier/list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/supplier.py" afterPath="$PROJECT_DIR$/partial/supplier.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="job_scraping.iws" />
@@ -35,16 +39,16 @@
     <file path="/edit_customer.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372062595398" ignored="false" />
     <file path="/edit_supplier.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372062647306" ignored="false" />
     <file path="/edit_item.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372062611739" ignored="false" />
-    <file path="/supplier.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372188413833" ignored="false" />
-    <file path="/customer.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372412273824" ignored="false" />
+    <file path="/supplier.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372485768481" ignored="false" />
+    <file path="/customer.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372485682225" ignored="false" />
     <file path="/router.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372467790829" ignored="false" />
     <file path="/welcome.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372416499901" ignored="false" />
     <file path="/show_customer.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372063235339" ignored="false" />
     <file path="/show_item.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372062676572" ignored="false" />
     <file path="/show_supplier.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372062691441" ignored="false" />
     <file path="/invoice.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372063038161" ignored="false" />
-    <file path="/list.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372421799746" ignored="false" />
-    <file path="/edit.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372484584784" ignored="false" />
+    <file path="/list.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372485644641" ignored="false" />
+    <file path="/edit.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372485024408" ignored="false" />
     <file path="/bootstrap_router.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372295246487" ignored="false" />
     <file path="/bootstrap_db.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372410167609" ignored="false" />
     <file path="/login.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372478212527" ignored="false" />
@@ -74,7 +78,16 @@
       <file leaf-file-name="item.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/partial/item.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="21" selection-end="21" vertical-scroll-proportion="0.03652174">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="supplier.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/partial/supplier.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="82" column="17" selection-start="2458" selection-end="2458" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,11 +111,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/__init__.py" />
-        <option value="$PROJECT_DIR$/app/config.py" />
-        <option value="$PROJECT_DIR$/app/partial/supplier.py" />
-        <option value="$PROJECT_DIR$/app/partial/router.py" />
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/partial/__init__.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/partial/router.py" />
@@ -111,9 +119,14 @@
         <option value="$PROJECT_DIR$/partial/user.py" />
         <option value="$PROJECT_DIR$/templates/user/edit.html" />
         <option value="$PROJECT_DIR$/partial/login.py" />
-        <option value="$PROJECT_DIR$/templates/item/edit.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
+        <option value="$PROJECT_DIR$/templates/item/edit.html" />
+        <option value="$PROJECT_DIR$/templates/supplier/list.html" />
+        <option value="$PROJECT_DIR$/templates/customer/list.html" />
         <option value="$PROJECT_DIR$/partial/item.py" />
+        <option value="$PROJECT_DIR$/templates/item/list.html" />
+        <option value="$PROJECT_DIR$/partial/customer.py" />
+        <option value="$PROJECT_DIR$/partial/supplier.py" />
       </list>
     </option>
   </component>
@@ -130,7 +143,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -177,88 +190,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="job_scraping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="job_scraping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="item" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="job_scraping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="job_scraping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="job_scraping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="partial" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -291,8 +222,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/partial" />
       <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/partial" />
       <recent name="$PROJECT_DIR$/templates/item" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -442,14 +373,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="1" width="1368" height="746" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23257576" sideWeight="0.67164177" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23257576" sideWeight="0.67164177" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -524,57 +455,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/bootstrap_router.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/customer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="11" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/router.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/user/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="20" selection-start="994" selection-end="994" vertical-scroll-proportion="-23.1">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="70" column="47" selection-start="3299" selection-end="3299" vertical-scroll-proportion="0.118421055">
@@ -595,20 +475,6 @@
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/supplier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="19" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/item/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="30" selection-start="433" selection-end="433" vertical-scroll-proportion="-9.8">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -635,9 +501,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/item/edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="8" selection-start="201" selection-end="201" vertical-scroll-proportion="-5.6">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/customer/edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="26" selection-end="26" vertical-scroll-proportion="-0.11743119">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/supplier/edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.346789">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/supplier/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="79" selection-start="367" selection-end="367" vertical-scroll-proportion="0.346789">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/customer/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="79" selection-start="367" selection-end="367" vertical-scroll-proportion="0.28440368">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/item/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="79" selection-start="367" selection-end="367" vertical-scroll-proportion="0.346789">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partial/customer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="17" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.94956523">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partial/supplier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="17" selection-start="2458" selection-end="2458" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/partial/item.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="21" selection-end="21" vertical-scroll-proportion="0.03652174">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

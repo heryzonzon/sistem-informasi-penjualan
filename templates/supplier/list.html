@@ -1,27 +1,39 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <h2 class="pull-left">{{ title.title() }}</h2>
-    <a class="btn btn-primary btn-title pull-right" href="{{ url_for('add_' + attr) }}">Tambah</a>
-    <br class="clearfix"/>
+    <div class="form-head">
+        <h2 class="pull-left title">{{ title.title() }}</h2>
+        <a class="btn btn-info btn-preposition-header" href="{{ url_for('add_' + attr) }}">
+            <i class="icon-plus icon-white"></i>
+        </a>
 
+        <form class="navbar-form pull-right" action="{{ url_for('search_' + attr) }}">
+            <input type="text" name="query" class="search-query" placeholder="Cari {{ title }}" />
+        </form>
+        <br class="clearfix"/>
+    </div>
+
+    <!-- message box -->
     {% for message in get_flashed_messages() %}
-        <div class="alert alert-success">
+        <div class="alert alert-info">
             <strong>{{ message }}</strong>
         </div>
     {% endfor %}
 
+    <!-- content -->
     <table class="table table-striped">
         <tr>
-            <th>Id</th>
             <th>Nama</th>
+            <th>Alamat</th>
+            <th>Kontak</th>
             <th>Action</th>
         </tr>
 
         {% for d in data %}
             <tr>
-                <td>{{ d.id }}</td>
                 <td>{{ d.name }}</td>
+                <td>{{ d.address or '-' }}</td>
+                <td>{{ d.contact or '-'}}</td>
                 <td>
                     <a href="{{ url_for('edit_' + attr, id=d.id) }}">Edit</a>
                     |

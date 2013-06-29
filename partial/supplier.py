@@ -1,11 +1,26 @@
-from partial.router import *
+from router import *
 
 @app.route('/suppliers')
 @login_required
 def suppliers():
     return render_template('supplier/list.html', attr='supplier',
-                                        data=Supplier.select(),
-                                        title='pemasok')
+                                                 data=Supplier.select(),
+                                                 title='pemasok')
+
+
+@app.route('/suppliers/search')
+@login_required
+def search_supplier():
+    query = request.values.get('query', None)
+
+    if query is not None:
+        wildcard_query = '%' + query + '%'
+        data = Supplier.select().where(Supplier.name ** wildcard_query)
+        return render_template('supplier/list.html', attr='supplier',
+                                                     data=data,
+                                                     title='pemasok')
+    else:
+        abort(404)
 
 
 @app.route('/suppliers/add', methods=['GET', 'POST'])
@@ -16,8 +31,8 @@ def add_supplier():
     if request.method == 'GET':
         form = SupplierForm(obj=data)
         return render_template('supplier/edit.html', prev_link='suppliers',
-                                            form=form,
-                                            data=None)
+                                                     form=form,
+                                                     data=None)
 
     else: # POST
         form = SupplierForm(request.form, obj=data)
@@ -31,7 +46,7 @@ def add_supplier():
             abort(403)
 
 
-@app.route('/suppliers/<id>', methods=['GET', 'POST'])
+@app.route('/suppliers/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_supplier(id):
     try:
@@ -47,18 +62,16 @@ def edit_supplier(id):
             data.save()
             flash('Data pemasok telah tersimpan')
             return redirect(url_for('suppliers'))
-        else:
-            abort(403)
 
     elif request.method == 'GET':
         form = SupplierForm(obj=data)
 
     return render_template('supplier/edit.html', prev_link='suppliers',
-                                        form=form,
-                                        data=data)
+                                                 form=form,
+                                                 data=data)
 
 
-@app.route('/suppliers/<id>/delete')
+@app.route('/suppliers/<int:id>/delete')
 @login_required
 def delete_supplier(id):
     try:

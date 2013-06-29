@@ -2,9 +2,9 @@
 
 {% block body %}
     {% if data.name %}
-        <h2>Edit {{ data.name }}</h2>
+        <h2 class="title">Edit {{ data.name }}</h2>
     {% else %}
-        <h2>Tambah data</h2>
+        <h2 class="title">Tambah data</h2>
     {% endif %}
     <br/>
 
@@ -14,12 +14,11 @@
                 {{ field.label(class="control-label") }}
                 <div class="controls">
                     {{ field }}
+                    {% for message in field.errors %}
+                        <div class="red-alert">{{ message }}</div>
+                    {% endfor %}
                 </div>
             </div>
-
-            {% for message in field.errors %}
-                <div class="flash">{{ message }}</div>
-            {% endfor %}
         {% endfor %}
 
         <div class="control-group">

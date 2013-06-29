@@ -10,7 +10,7 @@ def items():
 
 @app.route('/items/search')
 @login_required
-def search_items():
+def search_item():
     query = request.values.get('query', None)
 
     if query is not None:

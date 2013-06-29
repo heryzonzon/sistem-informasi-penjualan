@@ -7,8 +7,8 @@
             <i class="icon-plus icon-white"></i>
         </a>
 
-        <form class="navbar-form pull-right" action="{{ url_for('search_items') }}">
-            <input type="text" name="query" class="search-query" placeholder="Cari barang" />
+        <form class="navbar-form pull-right" action="{{ url_for('search_' + attr) }}">
+            <input type="text" name="query" class="search-query" placeholder="Cari {{ title }}" />
         </form>
         <br class="clearfix"/>
     </div>

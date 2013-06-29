@@ -1,11 +1,26 @@
-from partial.router import *
+from router import *
 
 @app.route('/customers')
 @login_required
 def customers():
     return render_template('customer/list.html', attr='customer',
-                                        data=Customer.select(),
-                                        title='pelanggan')
+                           data=Customer.select(),
+                           title='pelanggan')
+
+
+@app.route('/customers/search')
+@login_required
+def search_customer():
+    query = request.values.get('query', None)
+
+    if query is not None:
+        wildcard_query = '%' + query + '%'
+        data = Customer.select().where(Customer.name ** wildcard_query)
+        return render_template('customer/list.html', attr='customer',
+                               data=data,
+                               title='pelanggan')
+    else:
+        abort(404)
 
 
 @app.route('/customers/add', methods=['GET', 'POST'])
@@ -16,8 +31,8 @@ def add_customer():
     if request.method == 'GET':
         form = CustomerForm(obj=data)
         return render_template('customer/edit.html', prev_link='customers',
-                                            form=form,
-                                            data=None)
+                               form=form,
+                               data=None)
 
     else: # POST
         form = CustomerForm(request.form, obj=data)
@@ -31,7 +46,7 @@ def add_customer():
             abort(403)
 
 
-@app.route('/customers/<id>', methods=['GET', 'POST'])
+@app.route('/customers/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_customer(id):
     try:
@@ -47,18 +62,16 @@ def edit_customer(id):
             data.save()
             flash('Data pelanggan telah tersimpan')
             return redirect(url_for('customers'))
-        else:
-            abort(403)
 
     elif request.method == 'GET':
         form = CustomerForm(obj=data)
 
     return render_template('customer/edit.html', prev_link='customers',
-                                        form=form,
-                                        data=data)
+                           form=form,
+                           data=data)
 
 
-@app.route('/customers/<id>/delete')
+@app.route('/customers/<int:id>/delete')
 @login_required
 def delete_customer(id):
     try:
