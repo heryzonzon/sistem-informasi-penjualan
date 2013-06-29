@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fae47e3-cda4-4341-91bd-5612427eec14" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/customer.py" afterPath="$PROJECT_DIR$/partial/customer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/item.py" afterPath="$PROJECT_DIR$/partial/item.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/login.py" afterPath="$PROJECT_DIR$/partial/login.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/router.py" afterPath="$PROJECT_DIR$/partial/router.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/supplier.py" afterPath="$PROJECT_DIR$/partial/supplier.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/user.py" afterPath="$PROJECT_DIR$/partial/user.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/welcome.html" afterPath="$PROJECT_DIR$/templates/welcome.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forms.py" afterPath="$PROJECT_DIR$/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models.py" afterPath="$PROJECT_DIR$/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="job_scraping.iws" />
@@ -19,7 +13,7 @@
     <file path="/config.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372465768565" ignored="false" />
     <file path="/Python Console" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371463207362" ignored="false" />
     <file path="/routes.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372082236330" ignored="false" />
-    <file path="/models.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372415460550" ignored="false" />
+    <file path="/models.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372496176783" ignored="false" />
     <file path="/base.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372489007470" ignored="false" />
     <file path="/admin.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371948806184" ignored="false" />
     <file path="/run.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371465806842" ignored="false" />
@@ -28,7 +22,7 @@
     <file path="/init_db.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371990490198" ignored="false" />
     <file path="/todo.txt" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371538210332" ignored="false" />
     <file path="/home.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1371542160108" ignored="false" />
-    <file path="/forms.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372490254479" ignored="false" />
+    <file path="/forms.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372496237696" ignored="false" />
     <file path="/item_edit.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372007916589" ignored="false" />
     <file path="/item_list.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372005615610" ignored="false" />
     <file path="/dummy.xml" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372408864444" ignored="false" />
@@ -50,7 +44,7 @@
     <file path="/edit.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372485024408" ignored="false" />
     <file path="/bootstrap_router.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372295246487" ignored="false" />
     <file path="/bootstrap_db.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372410167609" ignored="false" />
-    <file path="/login.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372491064259" ignored="false" />
+    <file path="/login.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372491480413" ignored="false" />
     <file path="/login.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372412153238" ignored="false" />
     <file path="/user.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372490391555" ignored="false" />
     <file path="/requirements.txt" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372465515636" ignored="false" />
@@ -92,6 +86,28 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="forms.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="1" selection-start="764" selection-end="764" vertical-scroll-proportion="0.9130435">
+              <folding>
+                <element signature="e#0#62#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="45" selection-start="1569" selection-end="1569" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="user.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partial/user.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -119,13 +135,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="login.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partial/login.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="35" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.84">
-              <folding>
-                <element signature="e#0#65#0" expanded="true" />
-              </folding>
+            <state line="0" column="64" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -157,8 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/config.py" />
-        <option value="$PROJECT_DIR$/templates/user/list.html" />
         <option value="$PROJECT_DIR$/templates/user/edit.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/templates/item/edit.html" />
@@ -173,6 +185,8 @@
         <option value="$PROJECT_DIR$/partial/customer.py" />
         <option value="$PROJECT_DIR$/partial/user.py" />
         <option value="$PROJECT_DIR$/partial/login.py" />
+        <option value="$PROJECT_DIR$/models.py" />
+        <option value="$PROJECT_DIR$/forms.py" />
       </list>
     </option>
   </component>
@@ -534,20 +548,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/item/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="8" selection-start="201" selection-end="201" vertical-scroll-proportion="-5.6">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/customer/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="26" selection-end="26" vertical-scroll-proportion="-0.11743119">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/supplier/edit.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.346789">
@@ -597,9 +597,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partial/user.py">
+    <entry file="file://$PROJECT_DIR$/partial/item.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="0" selection-start="2382" selection-end="2382" vertical-scroll-proportion="0.0">
+        <state line="68" column="4" selection-start="2012" selection-end="2012" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="50" selection-start="1725" selection-end="1725" vertical-scroll-proportion="-2.1">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partial/login.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="64" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partial/router.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="76" selection-start="440" selection-end="440" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -618,32 +639,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partial/item.py">
+    <entry file="file://$PROJECT_DIR$/partial/user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="4" selection-start="2012" selection-end="2012" vertical-scroll-proportion="0.0">
+        <state line="78" column="0" selection-start="2382" selection-end="2382" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partial/router.py">
+    <entry file="file://$PROJECT_DIR$/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="76" selection-start="440" selection-end="440" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="50" selection-start="1725" selection-end="1725" vertical-scroll-proportion="-2.1">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/login.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="35" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.84">
+        <state line="68" column="45" selection-start="1569" selection-end="1569" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#65#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="1" selection-start="764" selection-end="764" vertical-scroll-proportion="0.9130435">
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
           </folding>
         </state>
       </provider>

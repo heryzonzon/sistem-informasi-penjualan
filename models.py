@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from peewee import CharField, DateTimeField, ForeignKeyField, IntegerField, BooleanField
+from peewee import CharField, DateTimeField, ForeignKeyField, IntegerField, BooleanField, FloatField
 
 from app import db
 
@@ -45,7 +45,6 @@ class Customer(db.Model):
 
 
 class Item(db.Model):
-    # TODO make it positive integer
     barcode = CharField(unique=True)
     name = CharField()
     stock = IntegerField(default=0)
@@ -73,7 +72,7 @@ class PurchaseInvoiceDetail(db.Model):
 class SalesInvoice(db.Model):
     code = CharField(primary_key=True)
     created_at = DateTimeField(default=datetime.now)
-    discount = IntegerField(default=0)
+    discount = FloatField(default=0)
 
     def __unicode__(self):
         return self.created_at
