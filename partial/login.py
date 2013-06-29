@@ -9,7 +9,7 @@ def load_user(id):
     return User.get(id=id)
 
 
-def is_admin(user):
+def admin_credential(user):
     try:
         user = User.get(username=user)
     except User.DoesNotExist:
@@ -21,9 +21,30 @@ def is_admin(user):
     return True
 
 
+@app.before_request
+def before_request():
+    user = current_user
+    is_anonymous = user.is_anonymous()
+    is_login = False
+
+    if is_anonymous:
+        user = 'user'
+    else:
+        is_login = True
+
+    is_admin = admin_credential(user)
+
+    g.credential = {
+        'user': user,
+        'is_login': is_login,
+        'is_admin': is_admin,
+        'is_anonymous': is_anonymous
+    }
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if not g.user.is_anonymous():
+    if not g.credential['is_anonymous']:
         return redirect(url_for('index'))
 
     form = LoginForm()
@@ -43,7 +64,8 @@ def login():
         else:
             flash('Username atau password salah')
 
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form,
+                                         credential=g.credential)
 
 
 @app.route('/logout')
@@ -51,8 +73,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-
-@app.before_request
-def before_request():
-    g.user = current_user

@@ -4,8 +4,9 @@ from router import *
 @login_required
 def customers():
     return render_template('customer/list.html', attr='customer',
-                           data=Customer.select(),
-                           title='pelanggan')
+                                                 data=Customer.select(),
+                                                 title='pelanggan',
+                                                 credential=g.credential)
 
 
 @app.route('/customers/search')
@@ -17,8 +18,9 @@ def search_customer():
         wildcard_query = '%' + query + '%'
         data = Customer.select().where(Customer.name ** wildcard_query)
         return render_template('customer/list.html', attr='customer',
-                               data=data,
-                               title='pelanggan')
+                                                     data=data,
+                                                     title='pelanggan',
+                                                     credential=g.credential)
     else:
         abort(404)
 
@@ -31,8 +33,9 @@ def add_customer():
     if request.method == 'GET':
         form = CustomerForm(obj=data)
         return render_template('customer/edit.html', prev_link='customers',
-                               form=form,
-                               data=None)
+                                                     form=form,
+                                                     data=None,
+                                                     credential=g.credential)
 
     else: # POST
         form = CustomerForm(request.form, obj=data)
@@ -67,8 +70,9 @@ def edit_customer(id):
         form = CustomerForm(obj=data)
 
     return render_template('customer/edit.html', prev_link='customers',
-                           form=form,
-                           data=data)
+                                                 form=form,
+                                                 data=data,
+                                                 credential=g.credential)
 
 
 @app.route('/customers/<int:id>/delete')

@@ -5,7 +5,8 @@ from router import *
 def suppliers():
     return render_template('supplier/list.html', attr='supplier',
                                                  data=Supplier.select(),
-                                                 title='pemasok')
+                                                 title='pemasok',
+                                                 credential=g.credential)
 
 
 @app.route('/suppliers/search')
@@ -18,7 +19,8 @@ def search_supplier():
         data = Supplier.select().where(Supplier.name ** wildcard_query)
         return render_template('supplier/list.html', attr='supplier',
                                                      data=data,
-                                                     title='pemasok')
+                                                     title='pemasok',
+                                                     credential=g.credential)
     else:
         abort(404)
 
@@ -32,7 +34,8 @@ def add_supplier():
         form = SupplierForm(obj=data)
         return render_template('supplier/edit.html', prev_link='suppliers',
                                                      form=form,
-                                                     data=None)
+                                                     data=None,
+                                                     credential=g.credential)
 
     else: # POST
         form = SupplierForm(request.form, obj=data)
@@ -68,7 +71,8 @@ def edit_supplier(id):
 
     return render_template('supplier/edit.html', prev_link='suppliers',
                                                  form=form,
-                                                 data=data)
+                                                 data=data,
+                                                 credential=g.credential)
 
 
 @app.route('/suppliers/<int:id>/delete')

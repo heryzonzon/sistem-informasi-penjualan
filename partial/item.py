@@ -5,7 +5,8 @@ from router import *
 def items():
     return render_template('item/list.html', attr='item',
                                              data=Item.select(),
-                                             title='barang')
+                                             title='barang',
+                                             credential=g.credential)
 
 
 @app.route('/items/search')
@@ -18,7 +19,8 @@ def search_item():
         data = Item.select().where(Item.name ** wildcard_query)
         return render_template('item/list.html', attr='item',
                                                  data=data,
-                                                 title='barang')
+                                                 title='barang',
+                                                 credential=g.credential)
     else:
         abort(404)
 
@@ -32,7 +34,8 @@ def add_item():
         form = ItemForm(obj=data)
         return render_template('item/edit.html', prev_link='items',
                                                  form=form,
-                                                 data=None)
+                                                 data=None,
+                                                 credential=g.credential)
 
     else: # POST
         form = ItemForm(request.form, obj=data)
@@ -67,8 +70,9 @@ def edit_item(id):
         form = ItemForm(obj=data)
 
     return render_template('item/edit.html', prev_link='items',
-                                        form=form,
-                                        data=data)
+                                             form=form,
+                                             data=data,
+                                             credential=g.credential)
 
 
 @app.route('/items/<int:id>/delete')

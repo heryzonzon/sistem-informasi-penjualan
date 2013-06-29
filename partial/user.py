@@ -5,7 +5,8 @@ from partial.router import *
 def users():
     return render_template('user/list.html', attr='user',
                                              data=User.select(),
-                                             title='pengguna')
+                                             title='pengguna',
+                                             credential=g.credential)
 
 
 @app.route('/users/search')
@@ -18,7 +19,8 @@ def search_users():
         data = User.select().where(User.username ** wildcard_query)
         return render_template('user/list.html', attr='user',
                                                  data=data,
-                                                 title='pengguna')
+                                                 title='pengguna',
+                                                 credential=g.credential)
     else:
         abort(404)
 
@@ -32,7 +34,8 @@ def add_user():
         form = UserForm(obj=data)
         return render_template('user/edit.html', prev_link='users',
                                                  form=form,
-                                                 data=None)
+                                                 data=None,
+                                                 credential=g.credential)
 
     else: # POST
         form = UserForm(request.form, obj=data)
@@ -70,7 +73,8 @@ def edit_user(id):
 
     return render_template('user/edit.html', prev_link='users',
                                              form=form,
-                                             data=data)
+                                             data=data,
+                                             credential=g.credential)
 
 
 @app.route('/users/<int:id>/delete')
