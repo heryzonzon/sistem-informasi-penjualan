@@ -74,15 +74,29 @@ def edit_user(id):
         abort(404)
 
     if request.method == 'POST':
+        from flask.ext.peewee.utils import check_password, make_password
+
         form = UserForm(request.form, obj=data)
 
-        if form.validate():
-            form.populate_obj(data)
-            data.save()
-            flash('Data pengguna telah tersimpan')
-            return redirect(url_for('users'))
+        # return error if old password is match with database
+        if not check_password(request.form['old_password'], data.password):
+            flash('Password salah', 'password')
+            return redirect(url_for('edit_user', id=id))
+
+        data.username = request.form['username']
+        data.password = make_password(request.form['new_password'])
+
+        if 'is_admin' in request.form:
+            data.is_admin = request.form['is_admin']
         else:
-            abort(403)
+            if request.form['username'] == g.credential['user'].username:
+                flash('Status admin tidak bisa diganti karena account ini sedang digunakan', 'admin')
+                return redirect(url_for('edit_user', id=id))
+            data.is_admin = False
+
+        data.save()
+        flash('Data pengguna telah tersimpan')
+        return redirect(url_for('users'))
 
     elif request.method == 'GET':
         form = UserForm(obj=data)

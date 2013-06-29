@@ -9,20 +9,48 @@
     <br/>
 
     <form class="form-horizontal" action="" method="post">
-        {% for field in form %}
-            <div class="control-group">
-                {{ field.label(class="control-label") }}
-                <div class="controls">
-                    {{ field }}
-                </div>
+        <!-- username -->
+        <div class="control-group">
+            {{ form.username.label(class="control-label") }}
+            <div class="controls">
+                {{ form.username }}
             </div>
-            # old pass
-            # new pass
+        </div>
 
-            {% for message in field.errors %}
-                <div class="flash">{{ message }}</div>
-            {% endfor %}
-        {% endfor %}
+        <!-- old password -->
+        <div class="control-group">
+            <label class="control-label" for="old_password">Old Password</label>
+            <div class="controls">
+                <input type="password" name="old_password" class="span3" />
+
+                {% for category, message in get_flashed_messages(with_categories=True) %}
+                    {% if category == 'password' %}
+                        <div class="red-alert">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- new password -->
+        <div class="control-group">
+            <label class="control-label" for="new_password">New Password</label>
+            <div class="controls">
+                <input type="password" name="new_password" class="span3" />
+            </div>
+        </div>
+
+        <!-- is admin -->
+        <div class="control-group">
+            {{ form.is_admin.label(class="control-label") }}
+            <div class="controls">
+                {{ form.is_admin }}
+                {% for category, message in get_flashed_messages(with_categories=True) %}
+                    {% if category == 'admin' %}
+                        <div class="red-alert">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
 
         <div class="control-group">
             <div class="controls">

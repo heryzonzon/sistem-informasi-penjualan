@@ -13,7 +13,7 @@ lm.login_view = 'login'
 
 if __name__ == '__main__':
     from partial.router import *
-    app.run(port=2222)
+    app.run(port=2223)
 
 # TODO
 # logo pd teman ban
