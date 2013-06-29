@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fae47e3-cda4-4341-91bd-5612427eec14" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forms.py" afterPath="$PROJECT_DIR$/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models.py" afterPath="$PROJECT_DIR$/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partial/user.py" afterPath="$PROJECT_DIR$/partial/user.py" />
     </list>
     <ignored path="job_scraping.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,7 +44,7 @@
     <file path="/bootstrap_db.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372410167609" ignored="false" />
     <file path="/login.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372491480413" ignored="false" />
     <file path="/login.html" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372412153238" ignored="false" />
-    <file path="/user.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372490391555" ignored="false" />
+    <file path="/user.py" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372496637039" ignored="false" />
     <file path="/requirements.txt" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372465515636" ignored="false" />
     <file path="/Dummy.txt" changelist="9fae47e3-cda4-4341-91bd-5612427eec14" time="1372468501139" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -80,16 +78,16 @@
       <file leaf-file-name="customer.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/partial/customer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="8" selection-start="2627" selection-end="2627" vertical-scroll-proportion="0.0">
+            <state line="49" column="0" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="1" selection-start="764" selection-end="764" vertical-scroll-proportion="0.9130435">
+            <state line="25" column="1" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#62#0" expanded="true" />
               </folding>
@@ -108,11 +106,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="user.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/partial/user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="0" selection-start="2382" selection-end="2382" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="105" column="0" selection-start="2945" selection-end="2945" vertical-scroll-proportion="0.94956523">
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,10 +183,10 @@
         <option value="$PROJECT_DIR$/partial/router.py" />
         <option value="$PROJECT_DIR$/partial/supplier.py" />
         <option value="$PROJECT_DIR$/partial/customer.py" />
-        <option value="$PROJECT_DIR$/partial/user.py" />
         <option value="$PROJECT_DIR$/partial/login.py" />
         <option value="$PROJECT_DIR$/models.py" />
         <option value="$PROJECT_DIR$/forms.py" />
+        <option value="$PROJECT_DIR$/partial/user.py" />
       </list>
     </option>
   </component>
@@ -632,17 +632,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partial/customer.py">
+    <entry file="file://$PROJECT_DIR$/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="8" selection-start="2627" selection-end="2627" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partial/user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="0" selection-start="2382" selection-end="2382" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="25" column="1" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -655,11 +650,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/forms.py">
+    <entry file="file://$PROJECT_DIR$/partial/customer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="1" selection-start="764" selection-end="764" vertical-scroll-proportion="0.9130435">
+        <state line="49" column="0" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/partial/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="0" selection-start="2945" selection-end="2945" vertical-scroll-proportion="0.94956523">
           <folding>
-            <element signature="e#0#62#0" expanded="true" />
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>

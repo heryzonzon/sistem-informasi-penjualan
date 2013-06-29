@@ -1,7 +1,20 @@
+from functools import wraps
 from partial.router import *
+
+def admin_required(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if not g.credential['is_admin']:
+            abort(403)
+
+        return fn(*args, **kwargs)
+
+    return decorated_view
+
 
 @app.route('/users')
 @login_required
+@admin_required
 def users():
     return render_template('user/list.html', attr='user',
                                              data=User.select(),
@@ -11,6 +24,7 @@ def users():
 
 @app.route('/users/search')
 @login_required
+@admin_required
 def search_users():
     query = request.values.get('query', None)
 
@@ -27,6 +41,7 @@ def search_users():
 
 @app.route('/users/add', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def add_user():
     data = User()
 
@@ -51,6 +66,7 @@ def add_user():
 
 @app.route('/users/<int:id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def edit_user(id):
     try:
         data = User.get(id=id)
@@ -79,6 +95,7 @@ def edit_user(id):
 
 @app.route('/users/<int:id>/delete')
 @login_required
+@admin_required
 def delete_user(id):
     try:
         data = User.get(id=id)
