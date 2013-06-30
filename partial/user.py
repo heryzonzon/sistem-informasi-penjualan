@@ -1,5 +1,6 @@
 from functools import wraps
 from partial.router import *
+from flask.ext.peewee.utils import check_password, make_password
 
 def admin_required(fn):
     @wraps(fn)
@@ -47,17 +48,25 @@ def add_user():
 
     if request.method == 'GET':
         form = UserForm(obj=data)
-        return render_template('user/edit.html', prev_link='users',
-                                                 form=form,
-                                                 data=None,
-                                                 credential=g.credential)
+        return render_template('user/add.html', prev_link='users',
+                                                form=form,
+                                                data=None,
+                                                credential=g.credential)
 
     else: # POST
         form = UserForm(request.form, obj=data)
 
         if form.validate():
             form.populate_obj(data)
-            data.save()
+            data.password = make_password(data.password)
+
+            # data is failed to save if username is not unique
+            try:
+                data.save()
+            except:
+                flash('Nama pengguna sudah ada')
+                return redirect(url_for('add_user'))
+
             flash('Data pengguna telah ditambah')
             return redirect(url_for('users'))
         else:
@@ -74,24 +83,26 @@ def edit_user(id):
         abort(404)
 
     if request.method == 'POST':
-        from flask.ext.peewee.utils import check_password, make_password
-
         form = UserForm(request.form, obj=data)
 
-        # return error if old password is match with database
+        # return error if old password is not match with database
         if not check_password(request.form['old_password'], data.password):
             flash('Password salah', 'password')
             return redirect(url_for('edit_user', id=id))
 
-        data.username = request.form['username']
+        #data.username = request.form['username']
         data.password = make_password(request.form['new_password'])
 
+        # set admin status to True if checked
         if 'is_admin' in request.form:
             data.is_admin = request.form['is_admin']
         else:
+            # return error if change admin status for account that is in used
             if request.form['username'] == g.credential['user'].username:
                 flash('Status admin tidak bisa diganti karena account ini sedang digunakan', 'admin')
                 return redirect(url_for('edit_user', id=id))
+
+            # set admin status to False if unchecked
             data.is_admin = False
 
         data.save()

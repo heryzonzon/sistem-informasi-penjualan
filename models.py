@@ -6,7 +6,7 @@ from app import db
 
 
 class User(db.Model):
-    username = CharField()
+    username = CharField(unique=True)
     password = CharField()
     is_admin = BooleanField()
 
@@ -18,9 +18,6 @@ class User(db.Model):
 
     def is_anonymous(self):
         return False
-
-    def get_id(self):
-        return str(self.id)
 
     def __unicode__(self):
         return self.username

@@ -18,3 +18,4 @@ if __name__ == '__main__':
 # TODO
 # logo pd teman ban
 # sidebar kanan utk tampilin statistik
+# username to be lowercase and unique

@@ -3,7 +3,7 @@ from wtfpeewee.orm import model_form
 from models import *
 
 
-UserForm = model_form(User, exclude='password')
+UserForm = model_form(User)
 SupplierForm = model_form(Supplier)
 CustomerForm = model_form(Customer)
 ItemForm = model_form(Item, field_args={

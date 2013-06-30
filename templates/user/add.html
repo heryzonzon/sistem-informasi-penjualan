@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block body %}
+    {% if data.name %}
+        <h2 class="title">Edit {{ data.name }}</h2>
+    {% else %}
+        <h2 class="title">Tambah data</h2>
+    {% endif %}
+
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+        {% if category == 'username' %}
+            <div class="red-alert">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+
+    <br/>
+
+    <form class="form-horizontal" action="" method="post">
+        {% for field in form %}
+            <div class="control-group">
+                {{ field.label(class="control-label") }}
+                <div class="controls">
+                    {{ field }}
+
+                    {% if field.name == 'username' %}
+                        {% for message in get_flashed_messages() %}
+                            <div class="red-alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" type="submit">Submit</button> or
+                <a href="{{ url_for(prev_link) }}">Back</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
