@@ -1,10 +1,10 @@
-from partial.router import *
+from router import *
 
 @app.route('/transactions/purchase')
-def transactions_purchase():
+def purchase_transactions():
     pass
 
 
 @app.route('/transactions/sales')
-def transactions_sales():
+def sales_transactions():
     pass

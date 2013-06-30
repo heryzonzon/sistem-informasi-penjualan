@@ -1,5 +1,5 @@
 from functools import wraps
-from partial.router import *
+from router import *
 from flask.ext.peewee.utils import check_password, make_password
 
 def admin_required(fn):

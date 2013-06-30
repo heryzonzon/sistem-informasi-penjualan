@@ -1,8 +1,8 @@
 DEBUG = True
 
 DATABASE = {
-    'name': 'db.sqlite',
-    'engine': 'peewee.SqliteDatabase'
+    'name': 'SIP',
+    'engine': 'peewee.MySQLDatabase'
 }
 
 SECRET_KEY = 'here we go'

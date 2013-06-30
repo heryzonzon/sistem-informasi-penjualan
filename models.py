@@ -54,7 +54,7 @@ class Item(db.Model):
 
 
 class PurchaseInvoice(db.Model):
-    code = CharField(primary_key=True)
+    code = CharField(unique=True)
     created_at = DateTimeField(default=datetime.now)
 
     def __unicode__(self):
@@ -67,7 +67,7 @@ class PurchaseInvoiceDetail(db.Model):
 
 
 class SalesInvoice(db.Model):
-    code = CharField(primary_key=True)
+    code = CharField(unique=True)
     created_at = DateTimeField(default=datetime.now)
     discount = FloatField(default=0)
 
