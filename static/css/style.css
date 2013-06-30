@@ -3,7 +3,7 @@ body { background-color: #f6f6f6 }
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 22px 32px;
-    margin-top: 40px
+    margin-top: 65px
 }
 
 .form-head {
@@ -16,7 +16,7 @@ table {
 
 .btn-preposition-header {
     margin-top: 15px;
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 h2.title {
@@ -29,6 +29,5 @@ h2.title {
 }
 
 .home {
-    margin-top: 5px;
-    font-size: 2em;
+    font: 2.5em 'SansationRegular', sans-serif;
 }
