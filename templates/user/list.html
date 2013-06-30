@@ -31,7 +31,13 @@
         {% for d in data %}
             <tr>
                 <td>{{ d.username }}</td>
-                <td>{{ d.is_admin }}</td>
+                <td>
+                    {% if d.is_admin %}
+                        <span class="label label-info">Yes</span>
+                    {% else %}
+                        <span class="label">No</span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ url_for('edit_' + attr, id=d.id) }}">Edit</a>
                     |
