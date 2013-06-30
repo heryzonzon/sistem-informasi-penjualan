@@ -90,7 +90,7 @@ def edit_user(id):
             flash('Password salah', 'password')
             return redirect(url_for('edit_user', id=id))
 
-        #data.username = request.form['username']
+        data.username = request.form['username']
         data.password = make_password(request.form['new_password'])
 
         # set admin status to True if checked
