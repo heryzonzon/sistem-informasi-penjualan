@@ -2,6 +2,7 @@ import json
 from flask import jsonify
 from peewee import fn, JOIN_LEFT_OUTER
 from router import *
+from partial.user import admin_required
 
 
 @app.route('/invoices/purchase/search')
@@ -50,35 +51,6 @@ def add_purchase_invoice():
     pass
 
 
-@app.route('/invoices/purchase/<int:id>', methods=['GET', 'POST'])
-@login_required
-def edit_purchase_invoice(id):
-    '''
-    try:
-        data = PurchaseInvoice.get(id=id)
-    except:
-        abort(404)
-
-    if request.method == 'POST':
-        form = PurchaseInvoiceForm(request.form, obj=data)
-
-        if form.validate():
-            form.populate_obj(data)
-            data.save()
-            flash('Data barang telah tersimpan')
-            return redirect(url_for('items'))
-
-    elif request.method == 'GET':
-        form = ItemForm(obj=data)
-
-    return render_template('item/edit.html', prev_link='items',
-                           form=form,
-                           data=data,
-                           credential=g.credential)
-    '''
-    pass
-
-
 @app.route('/items/<int:id>/delete')
 @login_required
 def delete_purchase_invoice(id):
@@ -94,25 +66,43 @@ def delete_purchase_invoice(id):
     pass
 
 
+
 @app.route('/invoices/purchase')
 def purchase_invoices():
-    #data = [item.__dict__['_data'] for item in Item.select()]
-    #json_data = json.loads(json.dumps(data))
-    #return jsonify(results=json_data)
-
     data = PurchaseInvoice.select(
-        PurchaseInvoice,
-        Supplier,
-        fn.Count(PurchaseInvoiceDetail.id).alias('count'),
-        fn.Sum(Item.price_buy).alias('price'))\
+        Supplier.name,
+        fn.Count(PurchaseInvoiceDetail.id).alias('item_count'),
+        fn.Count(Item.id).alias('total_item_count'),
+        fn.Sum(Item.price_buy).alias('price'),
+        # PurchaseInvoice must on bottom to make sure 'id' fetched from this
+        PurchaseInvoice)\
     .join(PurchaseInvoiceDetail, JOIN_LEFT_OUTER)\
     .join(Item, JOIN_LEFT_OUTER)\
     .join(Supplier, JOIN_LEFT_OUTER)\
     .group_by(PurchaseInvoice.code)\
     .naive()
 
+    data_detail = {invoice.id: PurchaseInvoiceDetail.select(PurchaseInvoiceDetail, Item)\
+        .join(Item, JOIN_LEFT_OUTER)\
+        .where(PurchaseInvoiceDetail.purchase_invoice == invoice.id).naive()
+          for invoice in data}
+
+    total_quantity = {invoice.id: PurchaseInvoiceDetail.select(
+            fn.Sum(PurchaseInvoiceDetail.quantity).alias('value'))\
+        .where(PurchaseInvoiceDetail.purchase_invoice == invoice.id)
+          for invoice in data}
+
+    total_price = {invoice.id: PurchaseInvoiceDetail.select(
+            fn.Sum(Item.price_buy * PurchaseInvoiceDetail.quantity).alias('value'))\
+        .join(Item, JOIN_LEFT_OUTER)\
+        .where(PurchaseInvoiceDetail.purchase_invoice == invoice.id).naive()
+          for invoice in data}
+
     return render_template('purchase_invoice/list.html', attr='purchase_invoice',
                                                          data=data,
+                                                         data_detail=data_detail,
+                                                         total_quantity=total_quantity,
+                                                         total_price=total_price,
                                                          title='faktur pembelian',
                                                          credential=g.credential)
 

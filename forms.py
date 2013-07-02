@@ -18,7 +18,11 @@ ItemForm = model_form(Item, field_args={
     }
 })
 PurchaseInvoiceForm = model_form(PurchaseInvoice)
-PurchaseInvoiceDetailForm = model_form(PurchaseInvoiceDetail)
+PurchaseInvoiceDetailForm = model_form(PurchaseInvoiceDetail, field_args={
+    'quantity': {
+        'validators': [validators.number_range(min=0)]
+    }
+})
 SalesInvoiceForm = model_form(SalesInvoice, field_args={
     'discount': {
         'validators': [validators.number_range(min=0, max=100)]

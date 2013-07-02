@@ -1,6 +1,12 @@
 from datetime import datetime
 
-from peewee import CharField, DateTimeField, ForeignKeyField, IntegerField, BooleanField, FloatField
+from peewee import (
+    CharField,
+    DateTimeField,
+    ForeignKeyField,
+    IntegerField,
+    BooleanField,
+    FloatField)
 
 from app import db
 
@@ -64,6 +70,7 @@ class PurchaseInvoice(db.Model):
 class PurchaseInvoiceDetail(db.Model):
     purchase_invoice = ForeignKeyField(PurchaseInvoice, related_name='related_to', null=True)
     item = ForeignKeyField(Item, related_name='items', null=True)
+    quantity = IntegerField(default=0)
 
 
 class SalesInvoice(db.Model):
@@ -78,6 +85,7 @@ class SalesInvoice(db.Model):
 class SalesInvoiceDetail(db.Model):
     sales_invoice = ForeignKeyField(SalesInvoice, related_name='related_to', null=True)
     item = ForeignKeyField(Item, related_name='items', null=True)
+    quantity = IntegerField(default=0)
 
 
 def seed_table():

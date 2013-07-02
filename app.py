@@ -13,9 +13,8 @@ lm.login_view = 'login'
 
 if __name__ == '__main__':
     from partial.router import *
-    app.run(port=2223)
+    app.run()
 
 # TODO
-# logo pd teman ban
 # sidebar kanan utk tampilin statistik
 # username to be lowercase and unique

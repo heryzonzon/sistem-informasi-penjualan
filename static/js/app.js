@@ -34,3 +34,19 @@ $('.select2-container').css({
     paddingLeft: 0
 });
 $('form input[type="checkbox"]').removeClass('span3');
+
+// invoice detail
+$('.invoice-detail').toggle(function() { // on state
+    $(this)
+        .addClass('label label-info')
+        .parents('tr')
+        .next('tr')
+        .fadeIn('fast');
+
+}, function() { // off state
+    $(this)
+        .removeClass('label label-info')
+        .parents('tr')
+        .next('tr')
+        .fadeOut('fast');
+});

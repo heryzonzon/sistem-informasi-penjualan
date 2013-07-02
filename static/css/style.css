@@ -31,3 +31,13 @@ h2.title {
 .home {
     font: 2.5em 'SansationRegular', sans-serif;
 }
+
+.dark-table-background {
+    background: #f6f6f6;
+    display: none;
+    border-bottom: 3px solid #ddd;
+}
+
+.dark-footer-table {
+    background: #eee;
+}

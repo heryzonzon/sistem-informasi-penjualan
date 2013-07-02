@@ -4,18 +4,10 @@
 
 import os
 from flask_peewee.utils import make_password
+from peewee import drop_model_tables
 from models import *
 
-try:
-    User.drop_table()
-    Customer.drop_table()
-    Item.drop_table()
-    PurchaseInvoice.drop_table()
-    PurchaseInvoiceDetail.drop_table()
-    SalesInvoice.drop_table()
-    SalesInvoiceDetail.drop_table()
-except:
-    pass
+drop_model_tables([User, Customer, Item, PurchaseInvoice, PurchaseInvoiceDetail, SalesInvoice, SalesInvoiceDetail])
 
 seed_table()
 
@@ -32,18 +24,18 @@ i1 = Item.create(barcode='I123', name='emping', price_buy=10000, price_sell=1500
 i2 = Item.create(barcode='I124', name='nasi gemuk', price_buy=15000, price_sell=25000, stock=8, supplier=s2)
 
 bi1 = PurchaseInvoice.create(code='FB123')
-PurchaseInvoiceDetail.create(purchase_invoice=bi1, item=i1)
-PurchaseInvoiceDetail.create(purchase_invoice=bi1, item=i2)
+PurchaseInvoiceDetail.create(purchase_invoice=bi1, item=i1, quantity=2)
+PurchaseInvoiceDetail.create(purchase_invoice=bi1, item=i2, quantity=3)
 
 bi2 = PurchaseInvoice.create(code='FB124')
-PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i1)
-PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i2)
-PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i2)
+PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i1, quantity=3)
+PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i2, quantity=4)
+PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i2, quantity=3)
 
 si1 = SalesInvoice.create(code='FJ423')
-SalesInvoiceDetail.create(sales_invoice=si1, item=i1)
-SalesInvoiceDetail.create(sales_invoice=si1, item=i2)
+SalesInvoiceDetail.create(sales_invoice=si1, item=i1, quantity=3)
+SalesInvoiceDetail.create(sales_invoice=si1, item=i2, quantity=5)
 
 si2 = SalesInvoice.create(code='FJ425')
-SalesInvoiceDetail.create(sales_invoice=si2, item=i1)
-SalesInvoiceDetail.create(sales_invoice=si2, item=i2)
+SalesInvoiceDetail.create(sales_invoice=si2, item=i1, quantity=4)
+SalesInvoiceDetail.create(sales_invoice=si2, item=i2, quantity=2)
