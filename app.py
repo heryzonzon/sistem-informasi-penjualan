@@ -1,9 +1,12 @@
 from flask import Flask
 from flask.ext.peewee.db import Database
 from flask.ext.login import LoginManager
+import filters
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.jinja_env.filters['rupiah'] = filters.to_rupiah
+app.jinja_env.filters['datetime'] = filters.format_datetime
 
 db = Database(app)
 

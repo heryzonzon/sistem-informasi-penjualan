@@ -36,8 +36,8 @@
                 <td>{{ d.barcode }}</td>
                 <td>{{ d.name }}</td>
                 <td>{{ d.stock }}</td>
-                <td>Rp{{ d.price_buy }}</td>
-                <td>Rp{{ d.price_sell }}</td>
+                <td>{{ d.price_buy | rupiah }}</td>
+                <td>{{ d.price_sell | rupiah }}</td>
                 <td>
                     <a href="{{ url_for('edit_' + attr, id=d.id) }}">Edit</a>
                     |
