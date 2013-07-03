@@ -1,5 +1,5 @@
 from flask import Flask
-from flask.ext.peewee.db import Database
+from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 import filters
 
@@ -8,7 +8,7 @@ app.config.from_object('config')
 app.jinja_env.filters['rupiah'] = filters.to_rupiah
 app.jinja_env.filters['datetime'] = filters.format_datetime
 
-db = Database(app)
+db = SQLAlchemy(app)
 
 lm = LoginManager()
 lm.init_app(app)

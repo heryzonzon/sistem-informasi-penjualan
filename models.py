@@ -1,20 +1,11 @@
 from datetime import datetime
-
-from peewee import (
-    CharField,
-    DateTimeField,
-    ForeignKeyField,
-    IntegerField,
-    BooleanField,
-    FloatField)
-
 from app import db
 
-
 class User(db.Model):
-    username = CharField(unique=True)
-    password = CharField()
-    is_admin = BooleanField()
+    id = db.Column(db.SmallInteger, primary_key=True)
+    username = db.Column(db.String(30), unique=True)
+    password = db.Column(db.String(256))
+    is_admin = db.Column(db.Boolean)
 
     def is_authenticated(self):
         return True
@@ -30,70 +21,71 @@ class User(db.Model):
 
 
 class Supplier(db.Model):
-    name = CharField()
-    address = CharField(null=True)
-    contact = CharField(null=True)
+    id = db.Column(db.SmallInteger, primary_key=True)
+    name = db.Column(db.String(30))
+    address = db.Column(db.String(50), nullable=True)
+    contact = db.Column(db.String(20), nullable=True)
 
     def __unicode__(self):
         return self.name
 
 
 class Customer(db.Model):
-    name = CharField()
-    address = CharField(null=True)
-    contact = CharField(null=True)
+    id = db.Column(db.SmallInteger, primary_key=True)
+    name = db.Column(db.String(30))
+    address = db.Column(db.String(50), nullable=True)
+    contact = db.Column(db.String(20), nullable=True)
 
     def __unicode__(self):
         return self.name
 
 
 class Item(db.Model):
-    barcode = CharField(unique=True)
-    name = CharField()
-    stock = IntegerField(default=0)
-    price_buy = IntegerField(default=0)
-    price_sell = IntegerField(default=0)
-    supplier = ForeignKeyField(Supplier, null=True)
+    id = db.Column(db.SmallInteger, primary_key=True)
+    barcode = db.Column(db.String(10), unique=True)
+    name = db.Column(db.String(30))
+    stock = db.Column(db.SmallInteger, default=0)
+    price_buy = db.Column(db.Integer, default=0)
+    price_sell = db.Column(db.Integer, default=0)
+    supplier_id = db.Column(db.SmallInteger, db.ForeignKey('supplier.id'), nullable=True)
 
     def __unicode__(self):
         return '%s (Stok: %s)' % (self.name, self.stock)
 
 
 class PurchaseInvoice(db.Model):
-    code = CharField(unique=True)
-    created_at = DateTimeField(default=datetime.now)
+    id = db.Column(db.SmallInteger, primary_key=True)
+    code = db.Column(db.String(10), unique=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    items = db.relationship('PurchaseInvoiceDetail', backref='purchase_invoice')
 
     def __unicode__(self):
         return self.created_at
 
 
 class PurchaseInvoiceDetail(db.Model):
-    purchase_invoice = ForeignKeyField(PurchaseInvoice, related_name='related_to', null=True)
-    item = ForeignKeyField(Item, related_name='items', null=True)
-    quantity = IntegerField(default=0)
+    item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
+    purchase_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('purchase_invoice.id'), primary_key=True)
+    quantity = db.Column(db.SmallInteger, default=0)
+    item = db.relationship('Item', backref='purchase_invoice_items')
 
 
 class SalesInvoice(db.Model):
-    code = CharField(unique=True)
-    created_at = DateTimeField(default=datetime.now)
-    discount = FloatField(default=0)
+    id = db.Column(db.SmallInteger, primary_key=True)
+    code = db.Column(db.String(10), unique=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    discount = db.Column(db.Float, default=0)
+    items = db.relationship('SalesInvoiceDetail', backref='sales_invoices')
 
     def __unicode__(self):
         return self.created_at
 
 
 class SalesInvoiceDetail(db.Model):
-    sales_invoice = ForeignKeyField(SalesInvoice, related_name='related_to', null=True)
-    item = ForeignKeyField(Item, related_name='items', null=True)
-    quantity = IntegerField(default=0)
+    item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
+    sales_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('sales_invoice.id'), primary_key=True)
+    quantity = db.Column(db.SmallInteger, default=0)
+    item = db.relationship('Item', backref='sales_invoice_items')
 
 
-def seed_table():
-    User.create_table(True)
-    Item.create_table(True)
-    Supplier.create_table(True)
-    Customer.create_table(True)
-    PurchaseInvoice.create_table(True)
-    PurchaseInvoiceDetail.create_table(True)
-    SalesInvoice.create_table(True)
-    SalesInvoiceDetail.create_table(True)
+db.create_all()
