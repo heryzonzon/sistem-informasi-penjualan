@@ -1,5 +1,0 @@
-flask
-flask-login
-flask-script
-flask-peewee
-virtualenv

@@ -1,19 +1,16 @@
 from flask.ext.login import current_user, login_user, logout_user
-from flask.ext.peewee.utils import check_password
+from passlib.hash import sha256_crypt
 
 from router import *
 
 @lm.user_loader
 def load_user(id):
     id = int(id)
-    return User.get(id=id)
+    return User.query.get(id)
 
 
 def admin_credential(user):
-    try:
-        user = User.get(username=user)
-    except User.DoesNotExist:
-        user = None
+    user = User.query.filter_by(username=user.username).first() or None
 
     if user is None or user.is_admin == False:
         return False
@@ -25,12 +22,10 @@ def admin_credential(user):
 def before_request():
     user = current_user
     is_anonymous = user.is_anonymous()
-    is_login = False
+    is_login = not is_anonymous
 
     if is_anonymous:
         user = 'user'
-    else:
-        is_login = True
 
     is_admin = admin_credential(user)
 
@@ -53,12 +48,9 @@ def login():
         user = request.form['username']
         pwd = request.form['password']
 
-        try:
-            fetched_user = User.get(username=user)
-        except User.DoesNotExist:
-            fetched_user = None
+        fetched_user = User.query.filter_by(username=user).first() or None
 
-        if fetched_user and check_password(pwd, fetched_user.password):
+        if fetched_user and sha256_crypt.verify(pwd, fetched_user.password):
             login_user(fetched_user)
             return redirect(url_for('index'))
         else:

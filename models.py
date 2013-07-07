@@ -1,11 +1,17 @@
 from datetime import datetime
-from app import db
+from app import app
+from flask.ext.sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(256))
     is_admin = db.Column(db.Boolean)
+
+    def get_id(self):
+        return unicode(self.id)
 
     def is_authenticated(self):
         return True
@@ -22,9 +28,10 @@ class User(db.Model):
 
 class Supplier(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
-    name = db.Column(db.String(30))
+    name = db.Column(db.String(30), unique=True)
     address = db.Column(db.String(50), nullable=True)
     contact = db.Column(db.String(20), nullable=True)
+    items = db.relationship('Item', backref='supplier')
 
     def __unicode__(self):
         return self.name
@@ -43,7 +50,7 @@ class Customer(db.Model):
 class Item(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
     barcode = db.Column(db.String(10), unique=True)
-    name = db.Column(db.String(30))
+    name = db.Column(db.String(30), unique=True)
     stock = db.Column(db.SmallInteger, default=0)
     price_buy = db.Column(db.Integer, default=0)
     price_sell = db.Column(db.Integer, default=0)
@@ -67,7 +74,11 @@ class PurchaseInvoiceDetail(db.Model):
     item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
     purchase_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('purchase_invoice.id'), primary_key=True)
     quantity = db.Column(db.SmallInteger, default=0)
-    item = db.relationship('Item', backref='purchase_invoice_items')
+    item = db.relationship('Item')
+
+    def __unicode__(self):
+        return unicode(PurchaseInvoice.query.get(
+                        self.purchase_invoice_id).created_at)
 
 
 class SalesInvoice(db.Model):
@@ -85,7 +96,8 @@ class SalesInvoiceDetail(db.Model):
     item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
     sales_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('sales_invoice.id'), primary_key=True)
     quantity = db.Column(db.SmallInteger, default=0)
-    item = db.relationship('Item', backref='sales_invoice_items')
+    item = db.relationship('Item')
 
-
-db.create_all()
+    def __unicode__(self):
+        return unicode(SalesInvoice.query.get(
+                        self.sales_invoice_id).created_at)

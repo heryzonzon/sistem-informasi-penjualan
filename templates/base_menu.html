@@ -1,0 +1,33 @@
+<ul class="nav nav-list">
+    <li class="home"><a href="{{ url_for('index') }}">PD Teman Ban</a></li>
+
+    <li class="nav-header">BASIC</li>
+    <li class="item"><a href="{{ url_for('items') }}">Barang</a></li>
+    <li class="supplier"><a href="{{ url_for('suppliers') }}">Pemasok</a></li>
+    <li class="customer"><a href="{{ url_for('customers') }}">Pelanggan</a></li>
+
+    <li class="divider"></li>
+
+    <li class="nav-header">FAKTUR</li>
+    <li class="invoice_purchase"><a href="{{ url_for('purchase_invoices') }}">Faktur Pembelian</a></li>
+    <li class="invoice_sales"><a href="{{ url_for('sales_invoices') }}">Faktur Penjualan</a></li>
+
+    <li class="divider"></li>
+
+    <li class="nav-header">TRANSAKSI</li>
+    <li class="transaction_purchase"><a href="{{ url_for('purchase_transactions') }}">Transaksi Pembelian</a></li>
+    <li class="transaction_sales"><a href="{{ url_for('purchase_transactions') }}">Transaksi Penjualan</a></li>
+
+    <li class="divider"></li>
+
+    <li class="nav-header">ACCOUNT</li>
+    {% if credential.is_login %}
+        {% if credential.is_admin %}
+            <li class="users"><a href="{{ url_for('users') }}">Edit user</a></li>
+        {% endif %}
+
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    {% else %}
+        <li class="login"><a href="{{ url_for('login') }}">Login</a></li>
+    {% endif %}
+</ul>
