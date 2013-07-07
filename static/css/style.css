@@ -38,6 +38,10 @@ h2.title {
     border-bottom: 3px solid #ddd;
 }
 
-.dark-footer-table {
-    background: #eee;
-}
+.dark-footer-table { background: #eee }
+
+.control-group label[for="csrf_token"] { display: none }
+
+.red-link, .red-link:hover { color: #b94a48 }
+
+.underline { text-decoration: underline}

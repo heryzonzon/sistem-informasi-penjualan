@@ -1,41 +1,67 @@
-#from app import auth
-#auth.User.create(username='admin', password='admin', email='info@admin.com', admin=True, active=True)
-#!/usr/bin/env python2
-
-import os
-from flask_peewee.utils import make_password
-from peewee import drop_model_tables
+from passlib.hash import sha256_crypt
 from models import *
+from models import db
 
-drop_model_tables([User, Customer, Item, PurchaseInvoice, PurchaseInvoiceDetail, SalesInvoice, SalesInvoiceDetail])
+def initdb():
+    db.drop_all()
+    db.create_all()
 
-seed_table()
+    user1 = User(username='ryan', password=sha256_crypt.encrypt('1234'), is_admin=True)
+    user2 = User(username='tes', password=sha256_crypt.encrypt('aja'), is_admin=False)
 
-User.create(username='ryan', password=make_password('1234'), is_admin=True)
-User.create(username='tes', password=make_password('aja'), is_admin=False)
+    supplier1 = Supplier(name='pt asri', address='dak tau')
+    supplier2 = Supplier(name='pt irsa', contact='13123')
 
-s1 = Supplier.create(name='pt asri', address='dak tau')
-s2 = Supplier.create(name='pt irsa', contact='13123')
+    customer1 = Customer(name='pelanggan pertama', contact='123342')
+    customer2 = Customer(name='pelanggan kedua')
 
-Customer.create(name='pelanggan pertama', contact='123342')
-Customer.create(name='pelanggan kedua')
+    item1 = Item(barcode='I123', name='emping', price_buy=10000, price_sell=15000, stock=5, supplier=supplier1)
+    item2 = Item(barcode='I124', name='nasi gemuk', price_buy=15000, price_sell=25000, stock=8, supplier=supplier2)
+    item3 = Item(barcode='5124', name='nasi kucing', price_buy=1500, price_sell=22000, stock=2, supplier=supplier2)
 
-i1 = Item.create(barcode='I123', name='emping', price_buy=10000, price_sell=15000, stock=5, supplier=s1)
-i2 = Item.create(barcode='I124', name='nasi gemuk', price_buy=15000, price_sell=25000, stock=8, supplier=s2)
+    pid1 = PurchaseInvoiceDetail(item=item1, quantity=2)
+    pid2 = PurchaseInvoiceDetail(item=item2, quantity=3)
+    pid3 = PurchaseInvoiceDetail(item=item3, quantity=3)
+    pid4 = PurchaseInvoiceDetail(item=item1, quantity=4)
+    pid5 = PurchaseInvoiceDetail(item=item3, quantity=3)
 
-bi1 = PurchaseInvoice.create(code='FB123')
-PurchaseInvoiceDetail.create(purchase_invoice=bi1, item=i1, quantity=2)
-PurchaseInvoiceDetail.create(purchase_invoice=bi1, item=i2, quantity=3)
+    pi1 = PurchaseInvoice(code='FB123', items=[pid1, pid3])
+    pi2 = PurchaseInvoice(code='FB124', items=[pid2, pid4, pid5])
 
-bi2 = PurchaseInvoice.create(code='FB124')
-PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i1, quantity=3)
-PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i2, quantity=4)
-PurchaseInvoiceDetail.create(purchase_invoice=bi2, item=i2, quantity=3)
+    sid1 = SalesInvoiceDetail(item=item1, quantity=3)
+    sid2 = SalesInvoiceDetail(item=item2, quantity=5)
+    sid3 = SalesInvoiceDetail(item=item1, quantity=4)
+    sid4 = SalesInvoiceDetail(item=item2, quantity=2)
 
-si1 = SalesInvoice.create(code='FJ423')
-SalesInvoiceDetail.create(sales_invoice=si1, item=i1, quantity=3)
-SalesInvoiceDetail.create(sales_invoice=si1, item=i2, quantity=5)
+    si1 = SalesInvoice(code='FJ423', items=[sid1, sid2])
+    si2 = SalesInvoice(code='FJ425', items=[sid3, sid4])
 
-si2 = SalesInvoice.create(code='FJ425')
-SalesInvoiceDetail.create(sales_invoice=si2, item=i1, quantity=4)
-SalesInvoiceDetail.create(sales_invoice=si2, item=i2, quantity=2)
+    db.session.add_all([
+        user1, user2, supplier1, supplier2, item1, item2, item3,
+        pid1, pid2, pid3, pid4, pid5, sid1, sid2, sid3, sid4,
+        pi1, pi2, si1, si2
+    ])
+    #db.session.add(user1)
+    #db.session.add(user2)
+    #db.session.add(supplier1)
+    #db.session.add(supplier2)
+    #db.session.add(customer1)
+    #db.session.add(customer2)
+    #db.session.add(item1)
+    #db.session.add(item2)
+    #db.session.add(item3)
+    #db.session.add(pid1)
+    #db.session.add(pid2)
+    #db.session.add(pid3)
+    #db.session.add(pid4)
+    #db.session.add(pid5)
+    #db.session.add(sid1)
+    #db.session.add(sid2)
+    #db.session.add(sid3)
+    #db.session.add(sid4)
+    #db.session.add(pi1)
+    #db.session.add(pi2)
+    #db.session.add(si1)
+    #db.session.add(si2)
+
+    db.session.commit()

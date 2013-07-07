@@ -1,6 +1,6 @@
 from functools import wraps
 from router import *
-from flask.ext.peewee.utils import check_password, make_password
+from passlib.hash import sha256_crypt
 
 def admin_required(fn):
     @wraps(fn)
@@ -18,7 +18,7 @@ def admin_required(fn):
 @admin_required
 def users():
     return render_template('user/list.html', attr='user',
-                                             data=User.select(),
+                                             data=User.query.all(),
                                              title='pengguna',
                                              credential=g.credential)
 
@@ -30,8 +30,7 @@ def search_users():
     query = request.values.get('query', None)
 
     if query is not None:
-        wildcard_query = '%' + query + '%'
-        data = User.select().where(User.username ** wildcard_query)
+        data = User.query.filter(User.username.contains(query)).all()
         return render_template('user/list.html', attr='user',
                                                  data=data,
                                                  title='pengguna',
@@ -58,44 +57,36 @@ def add_user():
 
         if form.validate():
             form.populate_obj(data)
-            data.password = make_password(data.password)
-
-            # data is failed to save if username is not unique
-            try:
-                data.save()
-            except:
-                flash('Nama pengguna sudah ada')
-                return redirect(url_for('add_user'))
-
+            data.password = sha256_crypt.encrypt(data.password)
+            db.session.add(data)
+            db.session.commit()
             flash('Data pengguna telah ditambah')
             return redirect(url_for('users'))
         else:
-            abort(403)
+            flash('Nama pengguna sudah ada')
+            return redirect(url_for('add_user'))
 
 
 @app.route('/users/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def edit_user(id):
-    try:
-        data = User.get(id=id)
-    except:
-        abort(404)
+    data = User.query.get_or_404(id)
 
     if request.method == 'POST':
         form = UserForm(request.form, obj=data)
 
         # return error if old password is not match with database
-        if not check_password(request.form['old_password'], data.password):
+        if not sha256_crypt.verify(request.form['old_password'], data.password):
             flash('Password salah', 'password')
             return redirect(url_for('edit_user', id=id))
 
         data.username = request.form['username']
-        data.password = make_password(request.form['new_password'])
+        data.password = sha256_crypt.encrypt(request.form['new_password'])
 
         # set admin status to True if checked
         if 'is_admin' in request.form:
-            data.is_admin = request.form['is_admin']
+            data.is_admin = True if request.form['is_admin'] == 'y' else False
         else:
             # return error if change admin status for account that is in used
             if request.form['username'] == g.credential['user'].username:
@@ -105,7 +96,8 @@ def edit_user(id):
             # set admin status to False if unchecked
             data.is_admin = False
 
-        data.save()
+        db.session.merge(data)
+        db.session.commit()
         flash('Data pengguna telah tersimpan')
         return redirect(url_for('users'))
 
@@ -122,10 +114,8 @@ def edit_user(id):
 @login_required
 @admin_required
 def delete_user(id):
-    try:
-        data = User.get(id=id)
-        data.delete_instance()
-        flash('Data pengguna telah terhapus')
-        return redirect(url_for('users'))
-    except:
-        abort(404)
+    data = User.query.get_or_404(id)
+    db.session.delete(data)
+    db.session.commit()
+    flash('Data pengguna telah terhapus')
+    return redirect(url_for('users'))
