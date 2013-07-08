@@ -20,7 +20,9 @@ def search_item():
     query = request.values.get('query', None)
 
     if query is not None:
-        data = Item.query.filter(Item.name.contains(query))
+        data = Item.query.filter(or_(
+            Item.barcode.contains(query),
+            Item.name.contains(query)))
         return render_template('item/list.html', data=data,
                                                  credential=g.credential)
     else:
