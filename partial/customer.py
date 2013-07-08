@@ -1,11 +1,11 @@
 from router import *
+from models import db
+from sqlalchemy.exc import IntegrityError
 
 @app.route('/customers')
 @login_required
 def customers():
-    return render_template('customer/list.html', attr='customer',
-                                                 data=Customer.select(),
-                                                 title='pelanggan',
+    return render_template('customer/list.html', data=Customer.query.all(),
                                                  credential=g.credential)
 
 
@@ -15,62 +15,46 @@ def search_customer():
     query = request.values.get('query', None)
 
     if query is not None:
-        wildcard_query = '%' + query + '%'
-        data = Customer.select().where(Customer.name ** wildcard_query)
-        return render_template('customer/list.html', attr='customer',
-                                                     data=data,
-                                                     title='pelanggan',
+        data = Customer.query.filter(or_(
+            Customer.barcode.contains(query),
+            Customer.name.contains(query)))
+        return render_template('customer/list.html', data=data,
                                                      credential=g.credential)
     else:
-        abort(404)
+        return redirect(url_for('customers'))
 
 
 @app.route('/customers/add', methods=['GET', 'POST'])
 @login_required
 def add_customer():
     data = Customer()
+    form = CustomerForm(obj=data)
 
-    if request.method == 'GET':
-        form = CustomerForm(obj=data)
-        return render_template('customer/edit.html', prev_link='customers',
-                                                     form=form,
-                                                     data=None,
-                                                     credential=g.credential)
+    if form.validate_on_submit():
+        form.populate_obj(data)
+        db.session.add(data)
+        db.session.commit()
+        flash('Data pelanggan telah ditambah')
+        return redirect(url_for('customers'))
 
-    else: # POST
-        form = CustomerForm(request.form, obj=data)
-
-        if form.validate():
-            form.populate_obj(data)
-            data.save()
-            flash('Data pelanggan telah ditambah')
-            return redirect(url_for('customers'))
-        else:
-            abort(403)
+    return render_template('customer/edit.html', form=form,
+                                                 credential=g.credential)
 
 
 @app.route('/customers/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_customer(id):
-    try:
-        data = Customer.get(id=id)
-    except:
-        abort(404)
+    data = Customer.query.get_or_404(id)
+    form = CustomerForm(obj=data)
 
-    if request.method == 'POST':
-        form = CustomerForm(request.form, obj=data)
+    if form.validate_on_submit():
+        form.populate_obj(data)
+        db.session.merge(data)
+        db.session.commit()
+        flash('Data pelanggan telah tersimpan')
+        return redirect(url_for('customers'))
 
-        if form.validate():
-            form.populate_obj(data)
-            data.save()
-            flash('Data pelanggan telah tersimpan')
-            return redirect(url_for('customers'))
-
-    elif request.method == 'GET':
-        form = CustomerForm(obj=data)
-
-    return render_template('customer/edit.html', prev_link='customers',
-                                                 form=form,
+    return render_template('customer/edit.html', form=form,
                                                  data=data,
                                                  credential=g.credential)
 
@@ -78,10 +62,34 @@ def edit_customer(id):
 @app.route('/customers/<int:id>/delete')
 @login_required
 def delete_customer(id):
-    try:
-        data = Customer.get(id=id)
-        data.delete_instance()
-        flash('Data pelanggan telah terhapus')
-        return redirect(url_for('customers'))
-    except:
-        abort(404)
+    #data = Customer.query.get_or_404(id)
+
+    #try:
+    #    db.session.delete(data)
+    #    db.session.commit()
+    #    flash('Data pelanggan telah terhapus')
+    #except IntegrityError:
+    #    db.session.rollback()
+
+    #    purchase_invoices = [( invoice_detail_link(invoice, 'purchase'), invoice.code )
+    #            for invoice in PurchaseInvoice.query
+    #                    .join(PurchaseInvoiceDetail, Customer)
+    #                    .filter(Customer.id == id)
+    #                    .all()]
+
+    #    sales_invoices = [( invoice_detail_link(invoice, 'sales'), invoice.code )
+    #            for invoice in SalesInvoice.query
+    #                    .join(SalesInvoiceDetail, Customer)
+    #                    .filter(Customer.id == id)
+    #                    .all()]
+
+    #    invoices = purchase_invoices + sales_invoices
+    #    pending_customer = Customer.query.get(id)
+
+    #    return render_template('customer/list.html', data=Customer.query.all(),
+    #                                                 pending_invoices=invoices,
+    #                                                 pending_customer=pending_customer,
+    #                                                 credential=g.credential)
+
+    #return redirect(url_for('customers'))
+    pass

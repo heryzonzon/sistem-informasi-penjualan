@@ -91,10 +91,16 @@ def delete_item(id):
         invoices = purchase_invoices + sales_invoices
         pending_item = Item.query.get(id)
 
-        # TODO option to delete all dependent invoice
         return render_template('item/list.html', data=Item.query.all(),
                                                  pending_invoices=invoices,
-                                                 pending_item=pending_item.name,
+                                                 pending_item=pending_item,
                                                  credential=g.credential)
 
     return redirect(url_for('items'))
+
+
+@app.route('/items/<int:id>/delete-recursive')
+@login_required
+def delete_item_include_invoices(id):
+    #data = Item.query.get_or_404(id)
+    pass

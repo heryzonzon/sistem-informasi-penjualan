@@ -37,7 +37,7 @@ $('form input[type="checkbox"]').removeClass('span3');
 
 // invoice detail
 // TODO need fix bug below
-var invoiceDetail = {
+var tableDetail = {
     show: function(el) {
         $(el).addClass('label label-info')
             .parents('tr')
@@ -52,20 +52,20 @@ var invoiceDetail = {
     }
 }
 
-$('.invoice-detail').toggle(function() { // on state
-    invoiceDetail.show(this);
+$('.table-detail').toggle(function() { // on state
+    tableDetail.show(this);
 }, function() { // off state
-    invoiceDetail.hide(this);
+    tableDetail.hide(this);
 });
 
 $('.collapse-all').click(function() {
-    $('.invoice-detail').each(function() {
-        invoiceDetail.show(this);
+    $('.table-detail').each(function() {
+        tableDetail.show(this);
     });
 })
 
 $('.hide-all').click(function() {
-    $('.invoice-detail').each(function() {
-        invoiceDetail.hide(this);
+    $('.table-detail').each(function() {
+        tableDetail.hide(this);
     });
 })

@@ -45,3 +45,8 @@ h2.title {
 .red-link, .red-link:hover { color: #b94a48 }
 
 .underline { text-decoration: underline}
+
+.disabled-text {
+    color: #999;
+    text-decoration: line-through;
+}

@@ -16,4 +16,4 @@ lm.login_view = 'login'
 
 if __name__ == '__main__':
     from partial.router import *
-    app.run()
+    app.run(port=3333)

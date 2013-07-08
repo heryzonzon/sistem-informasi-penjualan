@@ -30,9 +30,9 @@
             <tr>
                 <td>{{ d.code }}</td>
                 <td>{{ d.created_at | datetime }}</td>
-                <td>{{ d.items[0].item.supplier.name }}</td>
+                <td>{{ d.items[0].item.supplier.name or '-' }}</td>
                 <td>
-                    <a href="#" class="invoice-detail" data-id="{{ d.id }}">Detail</a>
+                    <a href="#" class="table-detail" data-id="{{ d.id }}">Detail</a>
                     |
                     <a href="{{ url_for('edit_purchase_invoice', id=d.id) }}">Edit</a>
                     |

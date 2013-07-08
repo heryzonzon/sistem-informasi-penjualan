@@ -1,11 +1,31 @@
 from router import *
+from models import db
+
+class GenerateSupplier:
+    def all(self):
+        return db.session.query(
+            Supplier,
+            db.func.count(Item.id).label('item_count')
+        ).outerjoin(Item).group_by(Supplier.id).all()
+
+    def filtered(self, query):
+        return db.session.query(
+            Supplier,
+            db.func.count(Item.id).label('item_count')
+        ).outerjoin(Item).group_by(Supplier.id).filter(or_(
+            Supplier.name.contains(query),
+            Supplier.address.contains(query),
+            Supplier.contact.contains(query))).all()
+
 
 @app.route('/suppliers')
 @login_required
 def suppliers():
-    return render_template('supplier/list.html', attr='supplier',
-                                                 data=Supplier.select(),
-                                                 title='pemasok',
+    data = GenerateSupplier().all()
+    data_detail = Item.query.all()
+
+    return render_template('supplier/list.html', data=data,
+                                                 data_detail=data_detail,
                                                  credential=g.credential)
 
 
@@ -15,62 +35,44 @@ def search_supplier():
     query = request.values.get('query', None)
 
     if query is not None:
-        wildcard_query = '%' + query + '%'
-        data = Supplier.select().where(Supplier.name ** wildcard_query)
-        return render_template('supplier/list.html', attr='supplier',
-                                                     data=data,
-                                                     title='pemasok',
+        data = GenerateSupplier().filtered(query)
+        return render_template('supplier/list.html', data=data,
                                                      credential=g.credential)
     else:
-        abort(404)
+        return redirect(url_for('suppliers'))
 
 
 @app.route('/suppliers/add', methods=['GET', 'POST'])
 @login_required
 def add_supplier():
     data = Supplier()
+    form = SupplierForm(obj=data)
 
-    if request.method == 'GET':
-        form = SupplierForm(obj=data)
-        return render_template('supplier/edit.html', prev_link='suppliers',
-                                                     form=form,
-                                                     data=None,
-                                                     credential=g.credential)
+    if form.validate_on_submit():
+        form.populate_obj(data)
+        db.session.add(data)
+        db.session.commit()
+        flash('Data pemasok telah ditambah')
+        return redirect(url_for('suppliers'))
 
-    else: # POST
-        form = SupplierForm(request.form, obj=data)
-
-        if form.validate():
-            form.populate_obj(data)
-            data.save()
-            flash('Data pemasok telah ditambah')
-            return redirect(url_for('suppliers'))
-        else:
-            abort(403)
+    return render_template('supplier/edit.html', form=form,
+                                                 credential=g.credential)
 
 
 @app.route('/suppliers/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_supplier(id):
-    try:
-        data = Supplier.get(id=id)
-    except:
-        abort(404)
+    data = Supplier.query.get_or_404(id)
+    form = SupplierForm(obj=data)
 
-    if request.method == 'POST':
-        form = SupplierForm(request.form, obj=data)
+    if form.validate_on_submit():
+        form.populate_obj(data)
+        db.session.merge(data)
+        db.session.commit()
+        flash('Data pemasok telah tersimpan')
+        return redirect(url_for('suppliers'))
 
-        if form.validate():
-            form.populate_obj(data)
-            data.save()
-            flash('Data pemasok telah tersimpan')
-            return redirect(url_for('suppliers'))
-
-    elif request.method == 'GET':
-        form = SupplierForm(obj=data)
-
-    return render_template('supplier/edit.html', prev_link='suppliers',
-                                                 form=form,
+    return render_template('supplier/edit.html', form=form,
                                                  data=data,
                                                  credential=g.credential)
 
@@ -78,10 +80,10 @@ def edit_supplier(id):
 @app.route('/suppliers/<int:id>/delete')
 @login_required
 def delete_supplier(id):
-    try:
-        data = Supplier.get(id=id)
-        data.delete_instance()
-        flash('Data pemasok telah terhapus')
-        return redirect(url_for('suppliers'))
-    except:
-        abort(404)
+    data = Supplier.query.get_or_404(id)
+
+    db.session.delete(data)
+    db.session.commit()
+    flash('Data pemasok telah terhapus')
+
+    return redirect(url_for('suppliers'))

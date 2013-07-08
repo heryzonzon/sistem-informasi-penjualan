@@ -28,9 +28,9 @@ class User(db.Model):
 
 class Supplier(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
-    name = db.Column(db.String(30), unique=True)
-    address = db.Column(db.String(50), nullable=True)
-    contact = db.Column(db.String(20), nullable=True)
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    address = db.Column(db.String(50))
+    contact = db.Column(db.String(20))
     items = db.relationship('Item', backref='supplier')
 
     def __unicode__(self):
@@ -55,6 +55,7 @@ class Item(db.Model):
     price_buy = db.Column(db.Integer, default=0)
     price_sell = db.Column(db.Integer, default=0)
     supplier_id = db.Column(db.SmallInteger, db.ForeignKey('supplier.id'), nullable=True)
+    purchase_invoices = db.relationship('PurchaseInvoiceDetail', backref='item')
 
     def __unicode__(self):
         return '%s (Stok: %s)' % (self.name, self.stock)
@@ -74,7 +75,7 @@ class PurchaseInvoiceDetail(db.Model):
     item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
     purchase_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('purchase_invoice.id'), primary_key=True)
     quantity = db.Column(db.SmallInteger, default=0)
-    item = db.relationship('Item')
+    #item = db.relationship('Item', cascade='all,delete')
 
     def __unicode__(self):
         return unicode(PurchaseInvoice.query.get(

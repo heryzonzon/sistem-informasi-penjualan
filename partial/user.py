@@ -17,9 +17,7 @@ def admin_required(fn):
 @login_required
 @admin_required
 def users():
-    return render_template('user/list.html', attr='user',
-                                             data=User.query.all(),
-                                             title='pengguna',
+    return render_template('user/list.html', data=User.query.all(),
                                              credential=g.credential)
 
 
@@ -31,9 +29,7 @@ def search_users():
 
     if query is not None:
         data = User.query.filter(User.username.contains(query)).all()
-        return render_template('user/list.html', attr='user',
-                                                 data=data,
-                                                 title='pengguna',
+        return render_template('user/list.html', data=data,
                                                  credential=g.credential)
     else:
         abort(404)
@@ -47,8 +43,7 @@ def add_user():
 
     if request.method == 'GET':
         form = UserForm(obj=data)
-        return render_template('user/add.html', prev_link='users',
-                                                form=form,
+        return render_template('user/add.html', form=form,
                                                 data=None,
                                                 credential=g.credential)
 
@@ -104,8 +99,7 @@ def edit_user(id):
     elif request.method == 'GET':
         form = UserForm(obj=data)
 
-    return render_template('user/edit.html', prev_link='users',
-                                             form=form,
+    return render_template('user/edit.html', form=form,
                                              data=data,
                                              credential=g.credential)
 

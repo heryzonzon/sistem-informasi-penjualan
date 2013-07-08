@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 
 {% block body %}
-    {% if data.name %}
-        <h2 class="title">Edit {{ data.name }}</h2>
-    {% else %}
-        <h2 class="title">Tambah data</h2>
-    {% endif %}
+    <h2 class="title">
+        {% if not data %}
+            Tambah data
+        {% else %}
+            Edit {{ data.name }}
+        {% endif %}
+    </h2>
+
     <br/>
 
     <form class="form-horizontal" action="" method="post">
@@ -13,7 +16,7 @@
             <div class="control-group">
                 {{ field.label(class="control-label") }}
                 <div class="controls">
-                    {{ field }}
+                    {{ field(autocomplete="off") }}
                     {% for message in field.errors %}
                         <div class="red-alert">{{ message }}</div>
                     {% endfor %}
@@ -24,7 +27,7 @@
         <div class="control-group">
             <div class="controls">
                 <button class="btn btn-primary" type="submit">Submit</button> or
-                <a href="{{ url_for(prev_link) }}">Back</a>
+                <a href="{{ url_for('suppliers') }}">Back</a>
             </div>
         </div>
     </form>

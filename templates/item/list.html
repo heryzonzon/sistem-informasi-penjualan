@@ -8,7 +8,7 @@
         </a>
 
         <form class="navbar-form pull-right" action="{{ url_for('search_item') }}">
-            <input type="text" name="query" class="search-query" placeholder="Pencarian nama barang" />
+            <input type="text" name="query" class="search-query" placeholder="Cari barcode atau nama" />
         </form>
         <br class="clearfix"/>
     </div>
@@ -17,7 +17,7 @@
     {% if pending_invoices %}
         <div class="alert alert-error">
             <strong>
-                {{ pending_item }} tidak bisa dihapus karena ketergantungan dengan faktur:
+                {{ pending_item.name }} tidak bisa dihapus karena ketergantungan dengan faktur:
             </strong>
             <br/>
 
@@ -31,7 +31,7 @@
 
             <span>
                 Klik
-                <a class="red-link underline" href="#"><strong>disini</strong></a>
+                <a class="red-link underline" href="{{ url_for('delete_item_include_invoices', id=pending_item.id) }}"><strong>disini</strong></a>
                 untuk menghapus barang serta faktur yang terkait.
             </span>
         </div>
