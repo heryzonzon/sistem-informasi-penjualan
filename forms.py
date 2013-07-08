@@ -26,10 +26,12 @@ SupplierForm = model_form(Supplier, db_session=db.session,
                                     exclude=['items'])
 
 CustomerForm = model_form(Customer, db_session=db.session,
-                                    base_class=Form)
+                                    base_class=Form,
+                                    exclude=['sales_invoices'])
 
 ItemForm = model_form(Item, db_session=db.session,
-                            base_class=Form, exclude=['purchase_invoices'],
+                            base_class=Form,
+                            exclude=['purchase_invoices'],
                             field_args=item_form_validators)
 
 PurchaseInvoiceForm = model_form(PurchaseInvoice, db_session=db.session,

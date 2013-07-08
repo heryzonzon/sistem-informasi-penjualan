@@ -11,9 +11,6 @@ def initdb():
     supplier1 = Supplier(name='pt asri', address='dak tau')
     supplier2 = Supplier(name='pt irsa', contact='13123')
 
-    customer1 = Customer(name='pelanggan pertama', contact='123342')
-    customer2 = Customer(name='pelanggan kedua')
-
     item1 = Item(barcode='I123', name='emping', price_buy=10000, price_sell=15000, stock=5, supplier=supplier1)
     item2 = Item(barcode='I124', name='nasi gemuk', price_buy=15000, price_sell=25000, stock=8, supplier=supplier2)
     item3 = Item(barcode='5124', name='nasi kucing', price_buy=1500, price_sell=22000, stock=2, supplier=supplier2)
@@ -34,6 +31,9 @@ def initdb():
 
     si1 = SalesInvoice(code='FJ423', items=[sid1, sid2])
     si2 = SalesInvoice(code='FJ425', items=[sid3, sid4])
+
+    customer1 = Customer(name='pelanggan pertama', contact='123342', sales_invoices=[si1])
+    customer2 = Customer(name='pelanggan kedua', sales_invoices=[si2])
 
     db.session.add_all([
         user1, user2, supplier1, supplier2, item1, item2, item3,

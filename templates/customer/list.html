@@ -3,12 +3,12 @@
 {% block body %}
     <div class="form-head">
         <h2 class="pull-left title">Pelanggan</h2>
-        <a class="btn btn-info btn-preposition-header" href="{{ url_for('add_supplier') }}">
+        <a class="btn btn-info btn-preposition-header" href="{{ url_for('add_customer') }}">
             <i class="icon-plus icon-white"></i>
         </a>
 
-        <form class="navbar-form pull-right" action="{{ url_for('search_supplier') }}">
-            <input type="text" name="query" class="search-query" placeholder="Pencarian nama pelanggan" />
+        <form class="navbar-form pull-right" action="{{ url_for('search_customer') }}">
+            <input type="text" name="query" class="search-query" placeholder="Cari nama, alamat, atau kontak" />
         </form>
         <br class="clearfix"/>
     </div>
@@ -31,7 +31,7 @@
 
             <span>
                 Klik
-                <a class="red-link underline" href="{{ url_for('delete_supplier_include_invoices', id=pending_supplier.id) }}"><strong>disini</strong></a>
+                <a class="red-link underline" href="{{ url_for('delete_customer_include_invoices', id=pending_customer.id) }}"><strong>disini</strong></a>
                 untuk tetap menghapus data pembeli.
             </span>
         </div>
@@ -55,12 +55,12 @@
         {% for d in data %}
             <tr>
                 <td>{{ d.name }}</td>
-                <td>{{ d.address }}</td>
-                <td>{{ d.contact }}</td>
+                <td>{{ d.address or '-' }}</td>
+                <td>{{ d.contact or '-' }}</td>
                 <td>
-                    <a href="{{ url_for('edit_supplier', id=d.id) }}">Edit</a>
+                    <a href="{{ url_for('edit_customer', id=d.id) }}">Edit</a>
                     |
-                    <a href="{{ url_for('delete_supplier', id=d.id) }}">Delete</a>
+                    <a href="{{ url_for('delete_customer', id=d.id) }}">Delete</a>
                 </td>
             </tr>
         {% endfor %}

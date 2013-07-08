@@ -39,9 +39,10 @@ class Supplier(db.Model):
 
 class Customer(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
-    name = db.Column(db.String(30))
-    address = db.Column(db.String(50), nullable=True)
-    contact = db.Column(db.String(20), nullable=True)
+    name = db.Column(db.String(30), nullable=False)
+    address = db.Column(db.String(50))
+    contact = db.Column(db.String(20))
+    sales_invoices = db.relationship('SalesInvoice', backref='customer')
 
     def __unicode__(self):
         return self.name
@@ -49,12 +50,12 @@ class Customer(db.Model):
 
 class Item(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
-    barcode = db.Column(db.String(10), unique=True)
-    name = db.Column(db.String(30), unique=True)
+    barcode = db.Column(db.String(10), unique=True, nullable=False)
+    name = db.Column(db.String(30), unique=True, nullable=False)
     stock = db.Column(db.SmallInteger, default=0)
     price_buy = db.Column(db.Integer, default=0)
     price_sell = db.Column(db.Integer, default=0)
-    supplier_id = db.Column(db.SmallInteger, db.ForeignKey('supplier.id'), nullable=True)
+    supplier_id = db.Column(db.SmallInteger, db.ForeignKey('supplier.id'))
     purchase_invoices = db.relationship('PurchaseInvoiceDetail', backref='item')
 
     def __unicode__(self):
@@ -68,7 +69,7 @@ class PurchaseInvoice(db.Model):
     items = db.relationship('PurchaseInvoiceDetail', backref='purchase_invoice')
 
     def __unicode__(self):
-        return self.created_at
+        return unicode(self.created_at)
 
 
 class PurchaseInvoiceDetail(db.Model):
@@ -85,12 +86,13 @@ class PurchaseInvoiceDetail(db.Model):
 class SalesInvoice(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
     code = db.Column(db.String(10), unique=True)
-    created_at = db.Column(db.DateTime, default=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now())
     discount = db.Column(db.Float, default=0)
+    customer_id = db.Column(db.SmallInteger, db.ForeignKey('customer.id'))
     items = db.relationship('SalesInvoiceDetail', backref='sales_invoices')
 
     def __unicode__(self):
-        return self.created_at
+        return unicode(self.created_at)
 
 
 class SalesInvoiceDetail(db.Model):
