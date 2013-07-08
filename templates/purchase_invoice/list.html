@@ -2,10 +2,10 @@
 
 {% block body %}
     <div class="form-head">
-        <h2 class="pull-left title">{{ title.title() }}</h2>
+        <h2 class="pull-left title">Faktur Pembelian</h2>
 
-        <form class="navbar-form pull-right" action="{{ url_for('search_' + attr) }}">
-            <input type="text" name="query" class="search-query" placeholder="Cari {{ title }}" />
+        <form class="navbar-form pull-right" action="{{ url_for('search_purchase_invoice') }}">
+            <input type="text" name="query" class="search-query" placeholder="Pencarian faktur barang" />
         </form>
         <br class="clearfix"/>
     </div>
@@ -23,7 +23,6 @@
             <th>Kode Faktur</th>
             <th>Tanggal</th>
             <th>Nama Pemasok</th>
-            <th>Jumlah Item</th>
             <th>Action</th>
         </tr>
 
@@ -31,49 +30,54 @@
             <tr>
                 <td>{{ d.code }}</td>
                 <td>{{ d.created_at | datetime }}</td>
-                <td>{{ d.name }}</td>
-                <td>{{ d.item_count }}</td>
+                <td>{{ d.items[0].item.supplier.name }}</td>
                 <td>
                     <a href="#" class="invoice-detail" data-id="{{ d.id }}">Detail</a>
                     |
-                    <a href="#">Edit</a>
+                    <a href="{{ url_for('edit_purchase_invoice', id=d.id) }}">Edit</a>
                     |
-                    <a href="{{ url_for('delete_' + attr, id=d.id) }}">Delete</a>
+                    <a href="{{ url_for('delete_purchase_invoice', id=d.id) }}">Delete</a>
                 </td>
             </tr>
             <tr class="dark-table-background">
                 <td/>
-                <td colspan="4">
+                <td colspan="3">
                     <table class="table table-bordered">
                         <tr class="dark-footer-table">
                             <th>No</th>
-                            <th>Barcode</th>
                             <th>Nama</th>
                             <th>Harga Beli</th>
                             <th>Quantity</th>
                             <th>Total Harga</th>
                         </tr>
-                        {% for d in data_detail[d.id] %}
+                        {% for dd in data_detail if dd.id == d.id %}
                             <tr>
                                 <td>{{ loop.index }}</td>
-                                <td>{{ d.barcode }}</td>
-                                <td>{{ d.name }}</td>
-                                <td>{{ d.price_buy | rupiah }}</td>
-                                <td>{{ d.quantity }}</td>
-                                <td>{{ (d.price_buy * d.quantity) | rupiah }}</td>
+                                <td>{{ dd.name }}</td>
+                                <td>{{ dd.price_buy | rupiah }}</td>
+                                <td>{{ dd.quantity }}</td>
+                                <td>{{ dd.total_price | rupiah }}</td>
                             </tr>
                         {% endfor %}
                         <tr class="dark-footer-table">
-                            <th colspan="3" style="text-align: center">Total</th>
-                            <th>{{ d.price | rupiah }}</th>
-
-                            <th>{{ total_quantity[d.id].get().value }}</th>
-
-                            <th>{{ total_price[d.id].get().value | rupiah }}</th>
+                            <th colspan="3" style="text-align: center">Grand Total</th>
+                            {% for dc in data_conclusion if dc.id == d.id %}
+                                <th>{{ dc.total_quantity }}</th>
+                                <th>{{ dc.total_price | rupiah }}</th>
+                            {% endfor %}
                         </tr>
                     </table>
                 </td>
             </tr>
         {% endfor %}
+
+        <tr>
+            <td colspan="3"/>
+            <td>
+                <a href="#" class="collapse-all">Collapse all</a>
+                |
+                <a href="#" class="hide-all">Hide all</a>
+            </td>
+        </tr>
     </table>
 {% endblock %}

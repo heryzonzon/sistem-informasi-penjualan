@@ -36,17 +36,36 @@ $('.select2-container').css({
 $('form input[type="checkbox"]').removeClass('span3');
 
 // invoice detail
-$('.invoice-detail').toggle(function() { // on state
-    $(this)
-        .addClass('label label-info')
-        .parents('tr')
-        .next('tr')
-        .fadeIn('fast');
+// TODO need fix bug below
+var invoiceDetail = {
+    show: function(el) {
+        $(el).addClass('label label-info')
+            .parents('tr')
+            .next('tr')
+            .fadeIn('fast');
+    },
+    hide: function(el) {
+        $(el).removeClass('label label-info')
+            .parents('tr')
+            .next('tr')
+            .fadeOut('fast');
+    }
+}
 
+$('.invoice-detail').toggle(function() { // on state
+    invoiceDetail.show(this);
 }, function() { // off state
-    $(this)
-        .removeClass('label label-info')
-        .parents('tr')
-        .next('tr')
-        .fadeOut('fast');
+    invoiceDetail.hide(this);
 });
+
+$('.collapse-all').click(function() {
+    $('.invoice-detail').each(function() {
+        invoiceDetail.show(this);
+    });
+})
+
+$('.hide-all').click(function() {
+    $('.invoice-detail').each(function() {
+        invoiceDetail.hide(this);
+    });
+})

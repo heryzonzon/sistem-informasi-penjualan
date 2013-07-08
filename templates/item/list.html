@@ -22,9 +22,9 @@
             <br/>
 
             <ul>
-                {% for invoice in pending_invoices %}
+                {% for id, code in pending_invoices %}
                     <li>
-                        <a href="{{ invoice.id }}" class="red-link">{{ invoice.code }}</a>
+                        <a href="{{ id }}" class="red-link">{{ code }}</a>
                     </li>
                 {% endfor %}
             </ul>

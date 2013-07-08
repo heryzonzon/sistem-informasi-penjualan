@@ -2,6 +2,11 @@ from router import *
 from models import db
 from sqlalchemy.exc import IntegrityError
 
+
+def invoice_detail_link(invoice, invoice_type):
+    return url_for('edit_%s_invoice' % invoice_type, id=invoice.id)
+
+
 @app.route('/items')
 @login_required
 def items():
@@ -26,14 +31,14 @@ def search_item():
 @login_required
 def add_item():
     data = Item()
-    form = ItemForm(request.form, obj=data)
+    form = ItemForm(obj=data)
 
     if form.validate_on_submit():
         form.populate_obj(data)
         db.session.add(data)
         db.session.commit()
         flash('Data barang telah ditambah')
-        return form.redirect(url_for('items'))
+        return redirect(url_for('items'))
 
     return render_template('item/edit.html', form=form,
                                              credential=g.credential)
@@ -43,19 +48,14 @@ def add_item():
 @login_required
 def edit_item(id):
     data = Item.query.get_or_404(id)
+    form = ItemForm(obj=data)
 
-    if request.method == 'GET':
-        form = ItemForm(obj=data)
-
-    elif request.method == 'POST':
-        form = ItemForm(request.form, obj=data)
-
-        if form.validate():
-            form.populate_obj(data)
-            db.session.merge(data)
-            db.session.commit()
-            flash('Data barang telah tersimpan')
-            return redirect(url_for('items'))
+    if form.validate_on_submit():
+        form.populate_obj(data)
+        db.session.merge(data)
+        db.session.commit()
+        flash('Data barang telah tersimpan')
+        return redirect(url_for('items'))
 
     return render_template('item/edit.html', form=form,
                                              data=data,
@@ -73,19 +73,20 @@ def delete_item(id):
         flash('Data barang telah terhapus')
     except IntegrityError:
         db.session.rollback()
-        # TODO change to edit_purchase_invoice
-        purchase_invoices = [{
-            'id': url_for('edit_item', id=invoice.id),
-            'code': invoice.code }
-                for invoice in PurchaseInvoice.query.filter(Item.id == id).all()]
 
-        sales_invoices = [{
-            'id': url_for('edit_item', id=invoice.id),
-            'code': invoice.code }
-                for invoice in SalesInvoice.query.filter(Item.id == id).all()]
+        purchase_invoices = [( invoice_detail_link(invoice, 'purchase'), invoice.code )
+                for invoice in PurchaseInvoice.query
+                        .join(PurchaseInvoiceDetail, Item)
+                        .filter(Item.id == id)
+                        .all()]
+
+        sales_invoices = [( invoice_detail_link(invoice, 'sales'), invoice.code )
+                for invoice in SalesInvoice.query
+                        .join(SalesInvoiceDetail, Item)
+                        .filter(Item.id == id)
+                        .all()]
 
         invoices = purchase_invoices + sales_invoices
-
         pending_item = Item.query.get(id)
 
         # TODO option to delete all dependent invoice

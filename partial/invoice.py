@@ -1,6 +1,3 @@
-import json
-from flask import jsonify
-from peewee import fn, JOIN_LEFT_OUTER
 from router import *
 from partial.user import admin_required
 
@@ -66,45 +63,41 @@ def delete_purchase_invoice(id):
     pass
 
 
+@app.route('/invoices/purchase/<int:id>')
+def edit_purchase_invoice(id):
+    pass
+
 
 @app.route('/invoices/purchase')
 def purchase_invoices():
-    data = PurchaseInvoice.select(
-        Supplier.name,
-        fn.Count(PurchaseInvoiceDetail.id).alias('item_count'),
-        fn.Count(Item.id).alias('total_item_count'),
-        fn.Sum(Item.price_buy).alias('price'),
-        # PurchaseInvoice must on bottom to make sure 'id' fetched from this
-        PurchaseInvoice)\
-    .join(PurchaseInvoiceDetail, JOIN_LEFT_OUTER)\
-    .join(Item, JOIN_LEFT_OUTER)\
-    .join(Supplier, JOIN_LEFT_OUTER)\
-    .group_by(PurchaseInvoice.code)\
-    .naive()
+    invoice_purchases = PurchaseInvoice.query.join(
+        PurchaseInvoiceDetail,
+        Item,
+        Supplier
+    ).group_by(PurchaseInvoice.id).all()
 
-    data_detail = {invoice.id: PurchaseInvoiceDetail.select(PurchaseInvoiceDetail, Item)\
-        .join(Item, JOIN_LEFT_OUTER)\
-        .where(PurchaseInvoiceDetail.purchase_invoice == invoice.id).naive()
-          for invoice in data}
+    invoice_purchase_details = db.session.query(
+        PurchaseInvoice.id,
+        Item.name,
+        Item.price_buy,
+        PurchaseInvoiceDetail.quantity,
+        (Item.price_buy * PurchaseInvoiceDetail.quantity).label('total_price')
+    ).join(PurchaseInvoiceDetail, Item).group_by(PurchaseInvoice.id, Item.id).all()
 
-    total_quantity = {invoice.id: PurchaseInvoiceDetail.select(
-            fn.Sum(PurchaseInvoiceDetail.quantity).alias('value'))\
-        .where(PurchaseInvoiceDetail.purchase_invoice == invoice.id)
-          for invoice in data}
+    invoice_purchase_conclusion = db.session.query(
+        PurchaseInvoice.id,
+        db.func.sum(PurchaseInvoiceDetail.quantity).label('total_quantity'),
+        db.func.sum(Item.price_buy * PurchaseInvoiceDetail.quantity).label('total_price')
+    ).join(PurchaseInvoiceDetail, Item).group_by(PurchaseInvoice.id).all()
 
-    total_price = {invoice.id: PurchaseInvoiceDetail.select(
-            fn.Sum(Item.price_buy * PurchaseInvoiceDetail.quantity).alias('value'))\
-        .join(Item, JOIN_LEFT_OUTER)\
-        .where(PurchaseInvoiceDetail.purchase_invoice == invoice.id).naive()
-          for invoice in data}
-
-    return render_template('purchase_invoice/list.html', attr='purchase_invoice',
-                                                         data=data,
-                                                         data_detail=data_detail,
-                                                         total_quantity=total_quantity,
-                                                         total_price=total_price,
-                                                         title='faktur pembelian',
+    return render_template('purchase_invoice/list.html', data=invoice_purchases,
+                                                         data_detail=invoice_purchase_details,
+                                                         data_conclusion=invoice_purchase_conclusion,
                                                          credential=g.credential)
+
+@app.route('/invoices/sales/<int:id>')
+def edit_sales_invoice(id):
+    pass
 
 
 @app.route('/invoices/sales')
