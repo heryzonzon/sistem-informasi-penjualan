@@ -10,12 +10,13 @@ def load_user(id):
 
 
 def admin_credential(user):
-    user = User.query.filter_by(username=user.username).first() or None
+    if user != 'user':
+        account = User.query.filter_by(username=user.username).first()
 
-    if user is None or user.is_admin == False:
-        return False
+        if account is not None and account.is_admin == True:
+            return True
 
-    return True
+    return False
 
 
 @app.before_request
