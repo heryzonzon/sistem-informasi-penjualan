@@ -56,7 +56,7 @@ class Item(db.Model):
     price_buy = db.Column(db.Integer, default=0)
     price_sell = db.Column(db.Integer, default=0)
     supplier_id = db.Column(db.SmallInteger, db.ForeignKey('supplier.id'))
-    #purchase_invoices = db.relationship('PurchaseInvoiceDetail', backref='item')
+    purchase_invoices = db.relationship('PurchaseInvoiceDetail', backref='item')
 
     def __unicode__(self):
         return '%s (Stok: %s)' % (self.name, self.stock)
@@ -66,7 +66,7 @@ class PurchaseInvoice(db.Model):
     id = db.Column(db.SmallInteger, primary_key=True)
     code = db.Column(db.String(10), unique=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
-    items = db.relationship('PurchaseInvoiceDetail', backref='purchase_invoices', cascade='all')
+    items = db.relationship('PurchaseInvoiceDetail', backref='purchase_invoice')
 
     def __unicode__(self):
         return unicode(self.created_at)
@@ -76,7 +76,7 @@ class PurchaseInvoiceDetail(db.Model):
     item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
     purchase_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('purchase_invoice.id'), primary_key=True)
     quantity = db.Column(db.SmallInteger, default=0)
-    item = db.relationship('Item')
+    #item = db.relationship('Item', cascade='all,delete')
 
     def __unicode__(self):
         return unicode(PurchaseInvoice.query.get(
@@ -89,7 +89,7 @@ class SalesInvoice(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now())
     discount = db.Column(db.Float, default=0)
     customer_id = db.Column(db.SmallInteger, db.ForeignKey('customer.id'))
-    items = db.relationship('SalesInvoiceDetail', backref='sales_invoices', cascade='all')
+    items = db.relationship('SalesInvoiceDetail', backref='sales_invoices')
 
     def __unicode__(self):
         return unicode(self.created_at)
