@@ -50,3 +50,5 @@ h2.title {
     color: #999;
     text-decoration: line-through;
 }
+
+.no-bold > th { font-weight: normal }

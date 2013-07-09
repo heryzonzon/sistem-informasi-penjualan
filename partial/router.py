@@ -13,4 +13,4 @@ from sqlalchemy import or_
 def index():
     return render_template('welcome.html', credential=g.credential)
 
-from partial import item, customer, supplier, invoice, transaction, login, user
+from partial import item, customer, supplier, purchase_invoice, sales_invoice, transaction, login, user

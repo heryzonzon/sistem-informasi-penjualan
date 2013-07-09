@@ -4,6 +4,10 @@
     <div class="form-head">
         <h2 class="pull-left title">Faktur Pembelian</h2>
 
+        <a class="btn btn-info btn-preposition-header" href="{{ url_for('purchase_transactions') }}">
+            <i class="icon-plus icon-white"></i>
+        </a>
+
         <form class="navbar-form pull-right" action="{{ url_for('search_purchase_invoice') }}">
             <input type="text" name="query" class="search-query" placeholder="Pencarian faktur barang" />
         </form>

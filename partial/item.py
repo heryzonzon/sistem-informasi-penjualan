@@ -1,4 +1,6 @@
 from router import *
+from partial.purchase_invoice import delete_invoice as delete_PI
+from partial.sales_invoice import delete_invoice as delete_SI
 from models import db
 from sqlalchemy.exc import IntegrityError
 
@@ -102,5 +104,16 @@ def delete_item(id):
 @app.route('/items/<int:id>/delete-recursive')
 @login_required
 def delete_item_include_invoices(id):
-    #data = Item.query.get_or_404(id)
-    pass
+    data = Item.query.get_or_404(id)
+
+    for invoice in PurchaseInvoiceDetail.query.filter_by(item_id=id).all():
+        delete_PI(invoice.purchase_invoice_id)
+
+    for invoice in SalesInvoiceDetail.query.filter_by(item_id=id).all():
+        delete_SI(invoice.sales_invoice_id)
+
+    db.session.delete(data)
+    db.session.commit()
+    flash('Data barang telah terhapus')
+
+    return redirect(url_for('items'))

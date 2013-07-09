@@ -5,7 +5,7 @@ var addHighlightClass = [
     { 'url': '/suppliers', 'class': 'supplier' },
     { 'url': '/customers', 'class': 'customer' },
     { 'url': '/invoices/purchase', 'class': 'invoice_purchase' },
-    { 'url': '/invoices/sales/', 'class': 'invoice_sales' },
+    { 'url': '/invoices/sales', 'class': 'invoice_sales' },
     { 'url': '/transactions/purchase', 'class': 'transaction_purchase' },
     { 'url': '/transactions/sales/', 'class': 'transaction_sales' },
     { 'url': '/users', 'class': 'users' },
