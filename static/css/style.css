@@ -50,3 +50,8 @@ h2.title {
     color: #999;
     text-decoration: line-through;
 }
+
+.ui-match {
+    background: yellow;
+    border: 1px solid orange;
+}

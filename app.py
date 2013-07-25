@@ -1,19 +1,14 @@
 from flask import Flask
-from flask.ext.debugtoolbar import DebugToolbarExtension
-from flask.ext.login import LoginManager
-import filters
+from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
+from flask.ext.mongorest import MongoRest
 
 app = Flask(__name__)
 app.config.from_object('config')
-app.jinja_env.filters['rupiah'] = filters.to_rupiah
-app.jinja_env.filters['datetime'] = filters.format_datetime
+db = MongoEngine(app)
+api = MongoRest(app)
+app.session_interface = MongoEngineSessionInterface(db)
 
-toolbar = DebugToolbarExtension(app)
-
-lm = LoginManager()
-lm.init_app(app)
-lm.login_view = 'login'
+from views import *
 
 if __name__ == '__main__':
-    from partial.router import *
-    app.run(port=3333)
+    app.run(port=3333, threaded=True)

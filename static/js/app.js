@@ -27,13 +27,8 @@ for ( var i = 0; i < addHighlightClass.length; i++ ) {
 }
 
 // select2
-$('form input, form select').addClass('span3');
 $('form select').select2();
-$('.select2-container').css({
-    marginLeft: 0,
-    paddingLeft: 0
-});
-$('form input[type="checkbox"]').removeClass('span3');
+$('.select2-container').css({ marginLeft: 0, paddingLeft: 0 });
 
 // invoice detail
 // TODO need fix bug below
@@ -69,3 +64,31 @@ $('.hide-all').click(function() {
         tableDetail.hide(this);
     });
 })
+
+// angularjs
+var app = angular.module('TemanBan', ['ngResource', 'ui.highlight']);
+
+app.config(function( $interpolateProvider ) {
+    $interpolateProvider.startSymbol('[[').endSymbol(']]');
+});
+
+app.controller('Item', function( $scope, $resource ) {
+    var resource = $resource('/api/items/:id', { id: '@id' }, {
+        query: {
+            method:'GET',
+            isArray: false
+        }
+    });
+
+    resource.query(function( res ) {
+        $scope.data = res.data;
+    });
+
+    $scope.remove = function( id ) {
+        resource.remove({ id: id }, function() {
+            resource.query(function( res ) {
+                $scope.data = res.data;
+            });
+        });
+    }
+});

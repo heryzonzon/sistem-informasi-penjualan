@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h2 class=title>
+        Tambah data
+    </h2>
+
+    <!-- message box -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-error">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+
+    <form class=form-horizontal action="{{ url_for('ItemView:post') }}" method=post>
+        <!-- barcode -->
+        <div class=control-group>
+            <label for=barcode class=control-label>Barcode</label>
+            <div class=controls>
+                <input type=text name=barcode autocomplete=off maxlength=10 required />
+            </div>
+        </div>
+
+        <!-- name -->
+        <div class=control-group>
+            <label for=name class=control-label>Name</label>
+            <div class=controls>
+                <input type=text name=name autocomplete=off maxlength=30 required />
+            </div>
+        </div>
+
+        <!-- stock -->
+        <div class=control-group>
+            <label for=stock class=control-label>Stock</label>
+            <div class=controls>
+                <input type=number name=stock min=0 value=0 required />
+            </div>
+        </div>
+
+        <!-- price_buy -->
+        <div class=control-group>
+            <label for=price_buy class=control-label>Harga Beli (Rp)</label>
+            <div class=controls>
+                <input type=number name=price_buy autocomplete=off min=0 value=0 required />
+            </div>
+        </div>
+
+        <!-- price_sell -->
+        <div class=control-group>
+            <label for=price_sell class=control-label>Harga Jual (Rp)</label>
+            <div class=controls>
+                <input type=number name=price_sell autocomplete=off min=0 value=0 required />
+            </div>
+        </div>
+
+        <!-- submit -->
+        <div class=control-group>
+            <div class=controls>
+                <button class="btn btn-primary" type=submit>Submit</button> or
+                <a href={{ url_for('ItemView:index') }}>Back</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

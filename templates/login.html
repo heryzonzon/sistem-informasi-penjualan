@@ -8,23 +8,27 @@
         </div>
     {% endfor %}
 
-    <form class="form-horizontal" action="{{ url_for('login') }}" method="post">
-        {% for field in form %}
-            <div class="control-group">
-                {{ field.label(class="control-label") }}
-                <div class="controls">
-                    {{ field }}
-                </div>
+    <form class=form-horizontal action=. method=post>
+        <!-- username -->
+        <div class=control-group>
+            <label for=username class=control-label>Username</label>
+            <div class=controls>
+                <input type=text name=username id=username class=span2>
             </div>
+        </div>
 
-            {% for message in field.errors %}
-                <div class="flash">{{ message }}</div>
-            {% endfor %}
-        {% endfor %}
+        <!-- password -->
+        <div class=control-group>
+            <label for=password class=control-label>Password</label>
+            <div class=controls>
+                <input type=password name=password id=password class=span2>
+            </div>
+        </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <button class="btn btn-primary" type="submit">Submit</button>
+        <!-- submit button -->
+        <div class=control-group>
+            <div class=controls>
+                <button class="btn btn-primary" type=submit>Submit</button>
             </div>
         </div>
     </form>

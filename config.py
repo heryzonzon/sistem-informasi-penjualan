@@ -1,3 +1,5 @@
-DEBUG = True
-SQLALCHEMY_DATABASE_URI = 'mysql:///SIP?unix_socket=/opt/lampp/var/mysql/mysql.sock'
+DEBUG=True
+MONGODB_HOST='localhost'
+MONGODB_PORT='27017'
+MONGODB_DB='SIP'
 SECRET_KEY = 'here we go'

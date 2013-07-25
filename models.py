@@ -1,14 +1,16 @@
+from app import db, api
 from datetime import datetime
-from app import app
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.mongorest import operators as ops
+from flask.ext.mongorest.methods import Create, Update, Fetch, List, Delete
+from flask.ext.mongorest.views import ResourceView
+from flask.ext.mongorest.resources import Resource
 
-db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.SmallInteger, primary_key=True)
-    username = db.Column(db.String(30), unique=True)
-    password = db.Column(db.String(256))
-    is_admin = db.Column(db.Boolean)
+# Data schema
+class User(db.Document):
+    username = db.StringField(max_length=30, required=True, unique=True)
+    password = db.StringField(max_length=30, required=True)
+    is_admin = db.BooleanField()
 
     def get_id(self):
         return unicode(self.id)
@@ -22,85 +24,102 @@ class User(db.Model):
     def is_anonymous(self):
         return False
 
-    def __unicode__(self):
-        return self.username
+
+class Item(db.Document):
+    barcode = db.StringField(max_length=10, required=True, unique=True)
+    name = db.StringField(max_length=30, required=True, unique=True)
+    stock = db.IntField(default=0, min_value=0, required=True)
+    price_buy = db.IntField(default=0, min_value=0, required=True)
+    price_sell = db.IntField(default=0, min_value=0, required=True)
 
 
-class Supplier(db.Model):
-    id = db.Column(db.SmallInteger, primary_key=True)
-    name = db.Column(db.String(30), unique=True, nullable=False)
-    address = db.Column(db.String(50))
-    contact = db.Column(db.String(20))
-    items = db.relationship('Item', backref='supplier')
-
-    def __unicode__(self):
-        return self.name
+class Supplier(db.Document):
+    id = db.SequenceField(unique=True)
+    name = db.StringField(max_length=30, required=True, unique=True)
+    address = db.StringField(max_length=50)
+    contact = db.StringField(max_length=20)
+    items = db.ReferenceField(Item)
 
 
-class Customer(db.Model):
-    id = db.Column(db.SmallInteger, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
-    address = db.Column(db.String(50))
-    contact = db.Column(db.String(20))
-    sales_invoices = db.relationship('SalesInvoice', backref='customer')
-
-    def __unicode__(self):
-        return self.name
+class PurchaseInvoiceDetail(db.EmbeddedDocument):
+    item = db.ReferenceField(Item)
+    quantity = db.IntField(default=0, min_value=0, required=True)
 
 
-class Item(db.Model):
-    id = db.Column(db.SmallInteger, primary_key=True)
-    barcode = db.Column(db.String(10), unique=True, nullable=False)
-    name = db.Column(db.String(30), unique=True, nullable=False)
-    stock = db.Column(db.SmallInteger, default=0)
-    price_buy = db.Column(db.Integer, default=0)
-    price_sell = db.Column(db.Integer, default=0)
-    supplier_id = db.Column(db.SmallInteger, db.ForeignKey('supplier.id'))
-    purchase_invoices = db.relationship('PurchaseInvoiceDetail', backref='item')
-
-    def __unicode__(self):
-        return '%s (Stok: %s)' % (self.name, self.stock)
+class PurchaseInvoice(db.Document):
+    code = db.StringField(max_length=10, required=True, unique=True)
+    created_at = db.DateTimeField(default=datetime.now)
+    details = db.ListField(db.EmbeddedDocumentField(PurchaseInvoiceDetail))
 
 
-class PurchaseInvoice(db.Model):
-    id = db.Column(db.SmallInteger, primary_key=True)
-    code = db.Column(db.String(10), unique=True)
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    items = db.relationship('PurchaseInvoiceDetail', backref='purchase_invoice')
-
-    def __unicode__(self):
-        return unicode(self.created_at)
+class SaleInvoiceDetail(db.EmbeddedDocument):
+    quantity = db.IntField(default=0, min_value=0, required=True)
 
 
-class PurchaseInvoiceDetail(db.Model):
-    item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
-    purchase_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('purchase_invoice.id'), primary_key=True)
-    quantity = db.Column(db.SmallInteger, default=0)
-    #item = db.relationship('Item', cascade='all,delete')
-
-    def __unicode__(self):
-        return unicode(PurchaseInvoice.query.get(
-                        self.purchase_invoice_id).created_at)
+class SaleInvoice(db.EmbeddedDocument):
+    code = db.StringField(max_length=10, required=True, unique=True)
+    created_at = db.DateTimeField(default=datetime.now)
+    discount = db.FloatField(default=0, min_value=0, required=True)
+    details = db.EmbeddedDocumentField(SaleInvoiceDetail)
 
 
-class SalesInvoice(db.Model):
-    id = db.Column(db.SmallInteger, primary_key=True)
-    code = db.Column(db.String(10), unique=True)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    discount = db.Column(db.Float, default=0)
-    customer_id = db.Column(db.SmallInteger, db.ForeignKey('customer.id'))
-    items = db.relationship('SalesInvoiceDetail', backref='sales_invoices')
-
-    def __unicode__(self):
-        return unicode(self.created_at)
+class Customer(db.Document):
+    name = db.StringField(max_length=30, required=True)
+    address = db.StringField(max_length=50)
+    contact = db.StringField(max_length=20)
+    invoices = db.EmbeddedDocumentField(SaleInvoice)
 
 
-class SalesInvoiceDetail(db.Model):
-    item_id = db.Column(db.SmallInteger, db.ForeignKey('item.id'), primary_key=True)
-    sales_invoice_id = db.Column(db.SmallInteger, db.ForeignKey('sales_invoice.id'), primary_key=True)
-    quantity = db.Column(db.SmallInteger, default=0)
-    item = db.relationship('Item')
+# Resource
+class UserResource(Resource):
+    document = User
 
-    def __unicode__(self):
-        return unicode(SalesInvoice.query.get(
-                        self.sales_invoice_id).created_at)
+class ItemResource(Resource):
+    document = Item
+
+class SupplierResource(Resource):
+    document = Supplier
+
+class PurchaseInvoiceDetailResource(Resource):
+    document = PurchaseInvoiceDetail
+
+class PurchaseInvoiceResource(Resource):
+    document = PurchaseInvoice
+    related_resources = {
+        'details': PurchaseInvoiceDetailResource
+    }
+
+class SaleInvoiceResource(Resource):
+    document = SaleInvoice
+
+class SaleInvoiceDetailResource(Resource):
+    document = SaleInvoiceDetail
+
+class CustomerResource(Resource):
+    document = Customer
+
+
+# Register API
+@api.register(name='users', url='/api/users/')
+class UserView(ResourceView):
+    resource = UserResource
+    methods = [Create, Update, Fetch, List]
+
+@api.register(name='items', url='/api/items/')
+class ItemView(ResourceView):
+    resource = ItemResource
+    methods = [Create, Update, Fetch, List, Delete]
+    filters = {
+        'barcode': [ops.Exact, ops.Contains],
+        'name': [ops.Exact, ops.Contains]
+    }
+
+@api.register(name='suppliers', url='/api/suppliers/')
+class SupplierView(ResourceView):
+    resource = SupplierResource
+    methods = [Create, Update, Fetch, List]
+
+@api.register(name='purchase_invoices', url='/api/invoices/purchase/')
+class PurchaseInvoiceView(ResourceView):
+    resource = PurchaseInvoiceResource
+    methods = [Create, Update, Fetch, List]
