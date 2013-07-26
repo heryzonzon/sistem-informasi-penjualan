@@ -1,73 +1,41 @@
-{% extends 'base.html' %}
+<div class="form-head">
+    <h2 class="pull-left title">Barang</h2>
+    <a class="btn btn-info btn-preposition-header" href="/#!/item/new">
+        <i class="icon-plus icon-white"></i>
+    </a>
 
-{% block body %}
-    <div ng-controller="Item">
-        <div class="form-head">
-            <h2 class="pull-left title">Barang</h2>
-            <a class="btn btn-info btn-preposition-header" href="{{ url_for('ItemView:new') }}">
-                <i class="icon-plus icon-white"></i>
-            </a>
-
-            <div class="navbar-form pull-right">
-                <input type="text" ng-model="search" class="search-query" placeholder="Cari barcode atau nama" />
-            </div>
-            <br class="clearfix"/>
-        </div>
-
-        <!-- message box -->
-        {% if pending_invoices %}
-            <div class="alert alert-error">
-                <strong>
-                    {{ pending_item.name }} tidak bisa dihapus karena ketergantungan dengan faktur:
-                </strong>
-                <br/>
-
-                <ul>
-                    {% for id, code in pending_invoices %}
-                        <li>
-                            <a href="{{ id }}" class="red-link">{{ code }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <span>
-                    Klik
-                    <a class="red-link underline" href="{{ url_for('delete_item_include_invoices', id=pending_item.id) }}"><strong>disini</strong></a>
-                    untuk menghapus barang serta faktur yang terkait.
-                </span>
-            </div>
-        {% endif %}
-
-        {% for message in get_flashed_messages() %}
-            <div class="alert alert-info">
-                <strong>{{ message }}</strong>
-            </div>
-        {% endfor %}
-
-        <!-- content -->
-        <table class="table table-striped">
-            <tr>
-                <th>Barcode</th>
-                <th>Nama</th>
-                <th>Stok</th>
-                <th>Harga Beli</th>
-                <th>Harga Jual</th>
-                <th>Action</th>
-            </tr>
-
-            <tr ng-repeat="d in data | filter:search">
-                <td ng-bind-html-unsafe="d.barcode | highlight:search"/>
-                <td ng-bind-html-unsafe="d.name | highlight:search"/>
-                <td ng-bind-html-unsafe="d.stock || '-' | highlight:search"/>
-                <td ng-bind-html-unsafe="d.price_buy || '-' | highlight:search"/>
-                <td ng-bind-html-unsafe="d.price_sell || '-' | highlight:search"/>
-                <td>
-                    <a href="/item/[[ d.id ]]">Edit</a>
-                    |
-                    <a href="#" ng-click="remove(d.id)">Delete</a>
-                </td>
-            </tr>
-
-        </table>
+    <div class="navbar-form pull-right">
+        <input type="text" ng-model="search" class="search-query" placeholder="Pencarian" />
     </div>
-{% endblock %}
+    <br class="clearfix"/>
+</div>
+
+<div class="alert alert-info" ng-show="messages.error">
+    <strong>as</strong>
+</div>
+
+<!-- content -->
+<table class="table">
+    <tr>
+        <th>Barcode</th>
+        <th>Nama</th>
+        <th>Stok</th>
+        <th>Harga Beli</th>
+        <th>Harga Jual</th>
+        <th>Action</th>
+    </tr>
+
+    <tr ng-repeat="d in data | filter:search" ng-class="{'error': (!data[$index].stock), 'warning': (data[$index].stock > 0 && data[$index].stock < 5) }">
+        <td ng-bind-html-unsafe="d.barcode | highlight:search"/>
+        <td ng-bind-html-unsafe="d.name | highlight:search"/>
+        <td ng-bind-html-unsafe="d.stock || '-' | highlight:search"/>
+        <td ng-bind-html-unsafe="d.price_buy | rupiah | highlight:search"/>
+        <td ng-bind-html-unsafe="d.price_sell | rupiah | highlight:search"/>
+        <td>
+            <a ng-href="/#!/item/[[ d.id ]]">Edit</a>
+            |
+            <a href="/#!/item" ng-click="remove(d.id)">Delete</a>
+        </td>
+    </tr>
+
+</table>

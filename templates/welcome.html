@@ -1,5 +1,51 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html ng-app=TemanBan>
+<head>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>Sistem Informasi Penjualan</title>
+    <link rel="stylesheet" href="/static/vendor/select2/select2.css"/>
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" href="/static/font/Sansation-fontfacekit/stylesheet.css"/>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+    <div class=row>
+        <nav class=span3>
+            <ul class="nav nav-list">
+                <li class=home><a href=/#!/>PD Teman Ban</a></li>
 
-{% block body %}
-Welcome {{ credential.user }}!
-{% endblock %}
+                <li class=nav-header>BASIC</li>
+                <li active-link><a href=/#!/item>Barang</a></li>
+                <li active-link><a href=/#!/supplier>Pemasok</a></li>
+                <li active-link><a href=/#!/customer>Pelanggan</a></li>
+
+                <li class=divider></li>
+
+                <li class=nav-header>FAKTUR</li>
+                <li><a href=/#!/invoice-purchase>Faktur Pembelian</a></li>
+                <li><a href=/#!/invoice-sale>Faktur Penjualan</a></li>
+
+                <li class=divider></li>
+
+                <li class=nav-header>TRANSAKSI</li>
+                <li><a href=/#!/transaction-purchase>Transaksi Pembelian</a></li>
+                <li><a href=/#!/transaction-sale>Transaksi Penjualan</a></li>
+
+                <li class=divider></li>
+            </ul>
+        </nav>
+
+        <div id=content class=span9 ng-view></div>
+    </div>
+
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/vendor/select2/select2.min.js"></script>
+    <script src="/static/vendor/angular/angular.min.js"></script>
+    <script src="/static/vendor/angular/angular-resource.js"></script>
+    <script src="/static/vendor/angular/highlight.js"></script>
+    <script src="/static/vendor/accounting/accounting.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -34,7 +34,6 @@ class Item(db.Document):
 
 
 class Supplier(db.Document):
-    id = db.SequenceField(unique=True)
     name = db.StringField(max_length=30, required=True, unique=True)
     address = db.StringField(max_length=50)
     contact = db.StringField(max_length=20)
@@ -56,10 +55,10 @@ class SaleInvoiceDetail(db.EmbeddedDocument):
     quantity = db.IntField(default=0, min_value=0, required=True)
 
 
-class SaleInvoice(db.EmbeddedDocument):
+class SaleInvoice(db.Document):
     code = db.StringField(max_length=10, required=True, unique=True)
     created_at = db.DateTimeField(default=datetime.now)
-    discount = db.FloatField(default=0, min_value=0, required=True)
+    discount = db.FloatField(default=0, min_value=0, max_value=0, required=True)
     details = db.EmbeddedDocumentField(SaleInvoiceDetail)
 
 
@@ -67,7 +66,7 @@ class Customer(db.Document):
     name = db.StringField(max_length=30, required=True)
     address = db.StringField(max_length=50)
     contact = db.StringField(max_length=20)
-    invoices = db.EmbeddedDocumentField(SaleInvoice)
+    invoices = db.ReferenceField(SaleInvoice)
 
 
 # Resource
@@ -103,21 +102,26 @@ class CustomerResource(Resource):
 @api.register(name='users', url='/api/users/')
 class UserView(ResourceView):
     resource = UserResource
-    methods = [Create, Update, Fetch, List]
+    methods = [Create, Update, Fetch, List, Delete]
+
 
 @api.register(name='items', url='/api/items/')
 class ItemView(ResourceView):
     resource = ItemResource
     methods = [Create, Update, Fetch, List, Delete]
-    filters = {
-        'barcode': [ops.Exact, ops.Contains],
-        'name': [ops.Exact, ops.Contains]
-    }
+
 
 @api.register(name='suppliers', url='/api/suppliers/')
 class SupplierView(ResourceView):
     resource = SupplierResource
-    methods = [Create, Update, Fetch, List]
+    methods = [Create, Update, Fetch, List, Delete]
+
+
+@api.register(name='customers', url='/api/customers/')
+class CustomerView(ResourceView):
+    resource = CustomerResource
+    methods = [Create, Update, Fetch, List, Delete]
+
 
 @api.register(name='purchase_invoices', url='/api/invoices/purchase/')
 class PurchaseInvoiceView(ResourceView):

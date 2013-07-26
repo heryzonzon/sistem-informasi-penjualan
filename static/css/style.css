@@ -1,4 +1,5 @@
 body { background-color: #f6f6f6 }
+
 #content {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -19,18 +20,14 @@ table {
     margin-left: 15px;
 }
 
-h2.title {
-    color: #1f6377;
-}
+h2.title { color: #1f6377; }
 
 .red-alert {
     margin-top: 5px;
     color: #b94a48;
 }
 
-.home {
-    font: 2.5em 'SansationRegular', sans-serif;
-}
+.home { font: 2.5em 'SansationRegular', sans-serif }
 
 .dark-table-background {
     background: #f6f6f6;
@@ -39,11 +36,7 @@ h2.title {
 }
 
 .dark-footer-table { background: #eee }
-
-.control-group label[for="csrf_token"] { display: none }
-
 .red-link, .red-link:hover { color: #b94a48 }
-
 .underline { text-decoration: underline}
 
 .disabled-text {

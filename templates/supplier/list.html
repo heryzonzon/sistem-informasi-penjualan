@@ -1,84 +1,37 @@
-{% extends 'base.html' %}
+<div class="form-head">
+    <h2 class="pull-left title">Pemasok</h2>
+    <a class="btn btn-info btn-preposition-header" href="/#!/supplier/new">
+        <i class="icon-plus icon-white"></i>
+    </a>
 
-{% block body %}
-    <div class="form-head">
-        <h2 class="pull-left title">Pemasok</h2>
-        <a class="btn btn-info btn-preposition-header" href="{{ url_for('add_supplier') }}">
-            <i class="icon-plus icon-white"></i>
-        </a>
-
-        <form class="navbar-form pull-right" action="{{ url_for('search_supplier') }}">
-            <input type="text" name="query" class="search-query" placeholder="Cari nama, alamat, atau kontak" />
-        </form>
-        <br class="clearfix"/>
+    <div class="navbar-form pull-right">
+        <input type="text" ng-model="search" class="search-query" placeholder="Pencarian" />
     </div>
+    <br class="clearfix"/>
+</div>
 
-    <!-- message box -->
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-info">
-            <strong>{{ message }}</strong>
-        </div>
-    {% endfor %}
+<div class="alert alert-info" ng-show="messages.error">
+    <strong>as</strong>
+</div>
 
-    <!-- content -->
-    <table class="table table-striped">
-        <tr>
-            <th>Nama</th>
-            <th>Alamat</th>
-            <th>Kontak</th>
-            <th>Jumlah Produksi</th>
-            <th>Action</th>
-        </tr>
+<!-- content -->
+<table class="table table-striped">
+    <tr>
+        <th>Nama</th>
+        <th>Alamat</th>
+        <th>Kontak</th>
+        <th>Action</th>
+    </tr>
 
-        {% for d in data %}
-            <tr>
-                <td>{{ d.Supplier.name }}</td>
-                <td>{{ d.Supplier.address or '-' }}</td>
-                <td>{{ d.Supplier.contact or '-' }}</td>
-                <td>{{ d.item_count }}</td>
-                <td>
-                    {% if d.item_count %}
-                        <a href="#" class="table-detail" data-id="{{ d.Supplier.id }}">Detail</a>
-                    {% else %}
-                        <span class="disabled-text">Detail</span>
-                    {% endif %}
-                    |
-                    <a href="{{ url_for('edit_supplier', id=d.Supplier.id) }}">Edit</a>
-                    |
-                    <a href="{{ url_for('delete_supplier', id=d.Supplier.id) }}">Delete</a>
-                </td>
-            </tr>
-            <tr class="dark-table-background">
-                <td/>
-                <td colspan="4">
-                    <table class="table table-bordered">
-                        <tr class="dark-footer-table">
-                            <th>No</th>
-                            <th>Barcode</th>
-                            <th>Nama Barang</th>
-                            <th>Harga Beli</th>
-                            <th>Stok Tersedia</th>
-                        </tr>
-                        {% for dd in data_detail if dd.supplier_id == d.Supplier.id %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ dd.barcode }}</td>
-                                <td>{{ dd.name }}</td>
-                                <td>{{ dd.price_buy | rupiah }}</td>
-                                <td>{{ dd.stock }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </td>
-        {% endfor %}
+    <tr ng-repeat="d in data | filter:search">
+        <td ng-bind-html-unsafe="d.name | highlight:search"/>
+        <td ng-bind-html-unsafe="d.address || '-' | highlight:search"/>
+        <td ng-bind-html-unsafe="d.contact || '-' | highlight:search"/>
+        <td>
+            <a ng-href="/#!/supplier/[[ d.id ]]">Edit</a>
+            |
+            <a href="/#!/supplier" ng-click="remove(d.id)">Delete</a>
+        </td>
+    </tr>
 
-        <tr>
-            <td colspan="4"/>
-            <td>
-                <a href="#" class="collapse-all">Collapse all</a>
-                |
-                <a href="#" class="hide-all">Hide all</a>
-            </td>
-        </tr>
-    </table>
-{% endblock %}
+</table>

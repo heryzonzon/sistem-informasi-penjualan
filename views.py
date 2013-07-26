@@ -1,10 +1,11 @@
 from functools import wraps
-from flask import render_template, request, flash, redirect, url_for, abort, g, jsonify
-from flask.ext.classy import FlaskView
+from flask import render_template, request, flash, redirect, url_for, abort, g, jsonify, send_from_directory
+from flask.ext.classy import FlaskView, route
 from flask.ext.login import LoginManager, current_user, login_required, login_user, logout_user
 from passlib.hash import sha256_crypt
 from models import *
 from app import app
+import os
 import json
 import requests
 
@@ -60,6 +61,20 @@ def before_request():
         'is_admin': is_admin,
         'is_anonymous': is_anonymous }
 
+@app.route('/template/<path:filename>')
+def template(filename):
+    return send_from_directory('templates', filename)
+
+@app.route('/static/<path:filename>')
+def static(filename):
+    return send_from_directory('static', filename)
+
+@app.route('/')
+def home():
+    return render_template('welcome.html', credential=g.credential)
+
+
+'''
 # ----------------------------------
 # HOME
 # ----------------------------------
@@ -118,8 +133,8 @@ class ItemView(FlaskView):
     def new(self):
         return render_template('item/new.html', credential=g.credential, data=Item.objects.all())
 
-    def get(self, id):
-        return render_template('item/edit.html', credential=g.credential, data=Item.objects.all())
+    def edit(self, id):
+        return render_template('item/edit.html', credential=g.credential, data=Item.objects.filter(id=id).first())
 
     def post(self):
         data = json.dumps(request.form)
@@ -132,16 +147,22 @@ class ItemView(FlaskView):
             flash('Kode barcode sudah ada', 'error')
             return redirect(url_for('ItemView:new'))
 
-    def put(self, id):
-        data = json.dumps(request.form)
-        hostname = 'http://' + request.host
-        req = requests.post(hostname + url_for('items'), data=data)
+    @app.route('/item/updateitem/<id>', methods=['POST'])
+    def updateitem(self, id):
+        return redirect('/')
+        #data = json.dumps(request.form)
+        #print request.data
+        #print request.form
+        #print 'oe'
+        #hostname = 'http://' + request.host
+        #req = requests.put(hostname + url_for('items'), data=data)
+        #pass
 
-        if req.status_code == 200:
-            return redirect(url_for('ItemView:index'))
-        else:
-            flash('Kode barcode sudah ada', 'error')
-            return redirect(url_for('ItemView:new'))
+        #if req.status_code == 200:
+        #    return redirect(url_for('ItemView:index'))
+        #else:
+        #    flash('Terjadi kesalahan di server', 'error')
+        #    return redirect(url_for('ItemView:get', id=id))
 
 # ----------------------------------
 # SUPPLIER
@@ -189,3 +210,4 @@ SupplierView.register(app)
 CustomerView.register(app)
 PurchaseInvoiceView.register(app)
 SaleInvoiceView.register(app)
+'''

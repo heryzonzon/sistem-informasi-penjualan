@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="form-head">
+        <h2 class="pull-left title">Pelanggan</h2>
+        <a class="btn btn-info btn-preposition-header" href="{{ url_for('add_customer') }}">
+            <i class="icon-plus icon-white"></i>
+        </a>
+
+        <form class="navbar-form pull-right" action="{{ url_for('search_customer') }}">
+            <input type="text" name="query" class="search-query" placeholder="Cari nama, alamat, atau kontak" />
+        </form>
+        <br class="clearfix"/>
+    </div>
+
+    <!-- message box -->
+    {% if pending_invoices %}
+        <div class="alert alert-error">
+            <strong>
+                {{ pending_customer.name }} memiliki ketergantungan dengan faktur:
+            </strong>
+            <br/>
+
+            <ul>
+                {% for id, code in pending_invoices %}
+                    <li>
+                        <a href="{{ id }}" class="red-link">{{ code }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <span>
+                Klik
+                <a class="red-link underline" href="{{ url_for('delete_customer_include_invoices', id=pending_customer.id) }}"><strong>disini</strong></a>
+                untuk tetap menghapus data pembeli.
+            </span>
+        </div>
+    {% endif %}
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-info">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+
+    <!-- content -->
+    <table class="table table-striped">
+        <tr>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Kontak</th>
+            <th>Action</th>
+        </tr>
+
+        {% for d in data %}
+            <tr>
+                <td>{{ d.name }}</td>
+                <td>{{ d.address or '-' }}</td>
+                <td>{{ d.contact or '-' }}</td>
+                <td>
+                    <a href="{{ url_for('edit_customer', id=d.id) }}">Edit</a>
+                    |
+                    <a href="{{ url_for('delete_customer', id=d.id) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}
